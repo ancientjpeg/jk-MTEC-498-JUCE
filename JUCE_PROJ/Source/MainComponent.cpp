@@ -15,7 +15,7 @@ void MainComponent::paint(juce::Graphics &g)
 
   g.setFont(juce::Font(16.0f));
   g.setColour(juce::Colours::white);
-  g.drawText("i changed this from vim lol", getLocalBounds(),
+  g.drawText("I am going to make a pull request today...", getLocalBounds(),
              juce::Justification::centred, true);
 }
 
