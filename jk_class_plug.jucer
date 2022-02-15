@@ -4,6 +4,8 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
+      <FILE id="HcFQ0n" name="ParamDefines.cpp" compile="1" resource="0"
+            file="Source/ParamDefines.cpp"/>
       <FILE id="fzlYux" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="djKYLV" name="ParamDefines.h" compile="0" resource="0" file="Source/ParamDefines.h"/>

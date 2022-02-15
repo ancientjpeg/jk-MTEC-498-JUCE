@@ -24,8 +24,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   freqSlider.setRange(20.f, 20000.f, 0.f);
   freqSlider.setSkewFactorFromMidPoint(2000.f);
-  freqSlider.setValue(p.getFreq());
-  freqSlider.addListener(this);
+  freqSlider.setValue(*p.mFreq);
   addAndMakeVisible(&freqSlider);
 
   FMFreqSlider.setSliderStyle(juce::Slider::LinearBarVertical);
@@ -35,8 +34,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   FMFreqSlider.setRange(0.25f, 4.f, 0.f);
   FMFreqSlider.setSkewFactorFromMidPoint(1.f);
-  FMFreqSlider.setValue(p.getFMRatio());
-  FMFreqSlider.addListener(this);
+  FMFreqSlider.setValue(*p.mFMRatio);
   addAndMakeVisible(&FMFreqSlider);
 
   FMAmtSlider.setSliderStyle(juce::Slider::LinearBarVertical);
@@ -45,13 +43,10 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
     audioProcessor.setFMAmt(FMAmtSlider.getValue());
   };
   FMAmtSlider.setRange(0.0f, 1.f, 0.f);
-  FMAmtSlider.setValue(p.getFMAmt());
-
-  FMAmtSlider.addListener(this);
+  FMAmtSlider.setValue(*p.mFMAmt);
   addAndMakeVisible(&FMAmtSlider);
 
   muteButton.setButtonText("MUTE TOGGLE");
-  muteButton.addListener(this);
   muteButton.onClick = [this]() { audioProcessor.muteToggle(); };
   addAndMakeVisible(muteButton);
 }
@@ -81,8 +76,3 @@ void jkClassPlugAudioProcessorEditor::resized()
   FMAmtSlider.setBounds(200, 0, 80, getHeight() - 20);
   muteButton.setBounds(400, 0, 150, 40);
 }
-
-void jkClassPlugAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
-{
-}
-void jkClassPlugAudioProcessorEditor::buttonClicked(juce::Button *button) {}

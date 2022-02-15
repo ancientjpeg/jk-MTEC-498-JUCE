@@ -14,9 +14,8 @@
 //==============================================================================
 /**
  */
-class jkClassPlugAudioProcessorEditor : public juce::AudioProcessorEditor,
-                                        public juce::Slider::Listener,
-                                        public juce::Button::Listener {
+class jkClassPlugAudioProcessorEditor : public juce::AudioProcessorEditor
+                                        {
 public:
   jkClassPlugAudioProcessorEditor(jkClassPlugAudioProcessor &);
   ~jkClassPlugAudioProcessorEditor() override;
@@ -31,8 +30,6 @@ private:
   jkClassPlugAudioProcessor &audioProcessor;
   juce::Slider               freqSlider, FMFreqSlider, FMAmtSlider;
   juce::TextButton           muteButton;
-  void                       sliderValueChanged(juce::Slider *slider) override;
-  void                       buttonClicked(juce::Button *button) override;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessorEditor)
 };

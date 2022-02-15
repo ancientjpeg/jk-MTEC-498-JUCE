@@ -3,14 +3,13 @@
 
 #include <JuceHeader.h>
 
-struct jkParam {
-
-}
-
-class jkClassPluginParams {
-
-public:
-  jkClassPluginParams() {}
+enum jkClassFloatPluginParams {
+  PARAM_FREQ,
+  PARAM_FM_RATIO,
+  PARAM_FM_AMT,
+  PARAM_GAIN,
 };
+
+juce::AudioProcessorValueTreeState::ParameterLayout getLayout();
 
 #endif
