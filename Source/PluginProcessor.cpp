@@ -25,6 +25,9 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
 #else
     :
 #endif
+      mUndoManager(30000, 200),
+      mParamState(*this, mUndoManager, juce::Identifier("PARAMS_TREE"),
+                  {std::make_unique}),
       mCarrier(2048), mModulator(2048), mMute(false)
 {
   setFreq(880.f);
@@ -142,7 +145,8 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       channelPtrs[channel][i] = mMute ? 0.f : valueCalc * mGain;
     }
-    float carrierRads = mTwoPiSampleDeltaT * (1. + mModulator.getAmpl());
+    float carrierRads =
+        mTwoPiSampleDeltaT * (1. + mModulator.getAmpl() * mFMAmt);
     mCarrier.advanceByRads(carrierRads);
     mModulator.advanceByRads(mTwoPiSampleDeltaT);
   }
@@ -154,8 +158,11 @@ void jkClassPlugAudioProcessor::setFMRatio(float ratio)
   mFMRatio = ratio;
   mModulator.setFreq(mFMRatio * mCarrier.getFreq());
 }
-void jkClassPlugAudioProcessor::setFMAmt(float amt) { mFMAmt = amt; }
-void jkClassPlugAudioProcessor::muteToggle() { mMute = !mMute; }
+void  jkClassPlugAudioProcessor::setFMAmt(float amt) { mFMAmt = amt; }
+void  jkClassPlugAudioProcessor::muteToggle() { mMute = !mMute; }
+float jkClassPlugAudioProcessor::getFreq() { return mCarrier.getFreq(); }
+float jkClassPlugAudioProcessor::getFMRatio() { return mFMRatio; }
+float jkClassPlugAudioProcessor::getFMAmt() { return mFMAmt; }
 
 //==============================================================================
 bool jkClassPlugAudioProcessor::hasEditor() const

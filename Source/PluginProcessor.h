@@ -47,11 +47,16 @@ public:
   int                getCurrentProgram() override;
   void               setCurrentProgram(int index) override;
   const juce::String getProgramName(int index) override;
-  void changeProgramName(int index, const juce::String &newName) override;
-  void setFreq(float freq);
-  void setFMRatio(float ratio);
-  void setFMAmt(float amt);
-  void muteToggle();
+  void  changeProgramName(int index, const juce::String &newName) override;
+
+  float mGain;
+  void  setFreq(float freq);
+  float getFreq();
+  void  setFMRatio(float ratio);
+  float getFMRatio();
+  void  setFMAmt(float amt);
+  float getFMAmt();
+  void  muteToggle();
 
   //==============================================================================
   void getStateInformation(juce::MemoryBlock &destData) override;
@@ -60,7 +65,9 @@ public:
 private:
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
-  SineWave mCarrier, mModulator;
-  float    mFMAmt, mFMRatio, mRadToTable, mGain, mTwoPiSampleDeltaT;
-  bool     mMute;
+  juce::UndoManager                  mUndoManager;
+  juce::AudioProcessorValueTreeState mParamState;
+  SineWave                           mCarrier, mModulator;
+  float mFMAmt, mFMRatio, mRadToTable, mTwoPiSampleDeltaT;
+  bool  mMute;
 };

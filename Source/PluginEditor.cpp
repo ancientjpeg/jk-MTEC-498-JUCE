@@ -24,7 +24,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   freqSlider.setRange(20.f, 20000.f, 0.f);
   freqSlider.setSkewFactorFromMidPoint(2000.f);
-  freqSlider.setValue(880.f);
+  freqSlider.setValue(p.getFreq());
   freqSlider.addListener(this);
   addAndMakeVisible(&freqSlider);
 
@@ -35,17 +35,17 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   FMFreqSlider.setRange(0.25f, 4.f, 0.f);
   FMFreqSlider.setSkewFactorFromMidPoint(1.f);
-  FMFreqSlider.setValue(1.f);
+  FMFreqSlider.setValue(p.getFMRatio());
   FMFreqSlider.addListener(this);
   addAndMakeVisible(&FMFreqSlider);
 
   FMAmtSlider.setSliderStyle(juce::Slider::LinearBarVertical);
   FMAmtSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 20);
-    FMAmtSlider.onValueChange = [this]() {
-    audioProcessor.setFMRatio(FMAmtSlider.getValue());
+  FMAmtSlider.onValueChange = [this]() {
+    audioProcessor.setFMAmt(FMAmtSlider.getValue());
   };
   FMAmtSlider.setRange(0.0f, 1.f, 0.f);
-  FMAmtSlider.setValue(0.5f);
+  FMAmtSlider.setValue(p.getFMAmt());
 
   FMAmtSlider.addListener(this);
   addAndMakeVisible(&FMAmtSlider);
