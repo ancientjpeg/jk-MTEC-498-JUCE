@@ -10,7 +10,7 @@ Sine::Sine(int wtSize, float deltaTimeTwoPi)
 void Sine::setDeltaT(float deltaTimeTwoPi) { mDeltaTimeTwoPi = deltaTimeTwoPi; }
 void Sine::setFreq(float freq) { mFreq = freq; }
 float Sine::lerp(float y0, float y1, float mod) { return (y1 - y0) * mod + y0; }
-float Sine::getAmpl() { mWavetable }
+float Sine::getAmpl() { mPhase * }
 
 float Sine::newPhase(float by)
 {

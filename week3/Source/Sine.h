@@ -5,10 +5,9 @@
 
 class Sine {
 
-  float                    mFreq, mPhase, mDeltaTimeTwoPi;
+  float                    mFreq, mPhase, mDeltaTimeTwoPi, mRadToTable;
   float                    lerp(float y0, float y1);
   juce::AudioBuffer<float> mWavetable;
-  float                    mRadToTable;
 
 public:
   Sine(int wtSize, float deltaTimeTwoPi);
