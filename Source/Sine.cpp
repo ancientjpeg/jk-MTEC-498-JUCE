@@ -1,7 +1,7 @@
 #include "Sine.h"
 
 SineWave::SineWave(float freqInit, int wtSize)
-    : mTableLen(2048), mFreq(freqInit), mPhase(0.f), mWavetable(1, mTableLen)
+    : mTableLen(2048), mFreq(freqInit), mPhase(0.f), mFreqSmooth(mFreq), mWavetable(1, mTableLen)
 {
   auto *write = mWavetable.getWritePointer(0);
   for (int i = 0; i < mWavetable.getNumSamples(); i++) {
@@ -9,13 +9,10 @@ SineWave::SineWave(float freqInit, int wtSize)
     write[i]         = std::sin(currentRad);
   }
   mRadToTable = (mWavetable.getNumSamples() - 1) / (2.f * M_PI);
-  mFreqSmooth.setCurrentAndTargetValue(mFreq);
 }
 
-void  SineWave::setFreq(float freq) {
-  mFreq = freq;
-  mFreqSmooth.setTargetValue(freq);
-}
+void  SineWave::setFreq(float freq) { mFreqSmooth.setTargetValue(freq); }
+void  SineWave::oneSamplePassed() { mFreq = mFreqSmooth.getNextValue(); }
 float SineWave::getFreq() { return mFreq; }
 float SineWave::getPhase() { return mPhase; }
 float SineWave::lerp(float y0, float y1, float mod)

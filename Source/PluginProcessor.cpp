@@ -154,6 +154,8 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
         mTwoPiSampleDeltaT * (1. + mModulator.getAmpl() * *mFMAmt);
     mCarrier.advanceByRads(carrierRads);
     mModulator.advanceByRads(mTwoPiSampleDeltaT);
+    mCarrier.oneSamplePassed();
+    mModulator.oneSamplePassed();
   }
 }
 
@@ -161,12 +163,17 @@ void jkClassPlugAudioProcessor::setFreq(float freq)
 {
   mParamState.getParameterAsValue("freq") = freq;
   mCarrier.setFreq(*mFreq);
+  setModFreq();
 }
 void jkClassPlugAudioProcessor::setFMRatio(float ratio)
 {
   mParamState.getParameterAsValue("FMRatio") = ratio;
+  setModFreq();
+}
+void jkClassPlugAudioProcessor::setModFreq(){
   mModulator.setFreq(*mFMRatio * mCarrier.getFreq());
 }
+
 void jkClassPlugAudioProcessor::setFMAmt(float amt)
 {
   mParamState.getParameterAsValue("FMAmt") = amt;

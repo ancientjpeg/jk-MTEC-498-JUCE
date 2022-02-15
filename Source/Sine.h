@@ -6,8 +6,8 @@
 class SineWave {
 
   int                      mTableLen;
-  juce::LinearSmoothedValue<float> mFreqSmooth;
   float                    mFreq, mPhase, mRadToTable;
+  juce::LinearSmoothedValue<float> mFreqSmooth;
   juce::AudioBuffer<float> mWavetable;
 
   float                    lerp(float y0, float y1);
@@ -15,6 +15,7 @@ class SineWave {
 public:
   SineWave(float freqInit, int wtSize);
   void  setFreq(float freq);
+  void  oneSamplePassed();
   float getFreq();
   float getPhase();
   float lerp(float y0, float y1, float mod);
