@@ -25,8 +25,12 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
 #else
     :
 #endif
-      mCarrier(2048), mModulator(2048)
+      mCarrier(2048), mModulator(2048), mMute(false)
 {
+  setFreq(880.f);
+  setFMRatio(2.0f);
+  setFMAmt(0.5f);
+  mGain = 1.0f;
 }
 
 jkClassPlugAudioProcessor::~jkClassPlugAudioProcessor() {}
@@ -138,8 +142,8 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       channelPtrs[channel][i] = mMute ? 0.f : valueCalc * mGain;
     }
-    float rads = mTwoPiSampleDeltaT * (1.f + mModulator.getAmpl());
-    mCarrier.advanceByRads(rads);
+    float carrierRads = mTwoPiSampleDeltaT * (1. + mModulator.getAmpl());
+    mCarrier.advanceByRads(carrierRads);
     mModulator.advanceByRads(mTwoPiSampleDeltaT);
   }
 }
@@ -150,6 +154,7 @@ void jkClassPlugAudioProcessor::setFMRatio(float ratio)
   mFMRatio = ratio;
   mModulator.setFreq(mFMRatio * mCarrier.getFreq());
 }
+void jkClassPlugAudioProcessor::setFMAmt(float amt) { mFMAmt = amt; }
 void jkClassPlugAudioProcessor::muteToggle() { mMute = !mMute; }
 
 //==============================================================================

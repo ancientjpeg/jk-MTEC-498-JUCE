@@ -50,6 +50,7 @@ public:
   void changeProgramName(int index, const juce::String &newName) override;
   void setFreq(float freq);
   void setFMRatio(float ratio);
+  void setFMAmt(float amt);
   void muteToggle();
 
   //==============================================================================

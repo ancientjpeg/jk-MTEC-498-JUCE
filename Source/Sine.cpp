@@ -35,7 +35,7 @@ float SineWave::getAmpl()
 
 void SineWave::advanceByRads(float rads)
 {
-  mPhase += rads;
+  mPhase += rads * mFreq;
   if (mPhase >= 2.f * M_PI) {
     mPhase -= 2.f * M_PI;
   }
