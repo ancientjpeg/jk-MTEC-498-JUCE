@@ -49,7 +49,7 @@ public:
   const juce::String getProgramName(int index) override;
   void changeProgramName(int index, const juce::String &newName) override;
   void setFreq(float freq);
-  void setFMFreq(float freq);
+  void setFMRatio(float ratio);
   void muteToggle();
 
   //==============================================================================
@@ -59,7 +59,7 @@ public:
 private:
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
-  Sine  carrier, modulator;
-  float mFMRatio, mRadToTable, mGain;
-  bool  mMute;
+  SineWave mCarrier, mModulator;
+  float    mFMAmt, mFMRatio, mRadToTable, mGain, mTwoPiSampleDeltaT;
+  bool     mMute;
 };

@@ -29,8 +29,7 @@ private:
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   jkClassPlugAudioProcessor &audioProcessor;
-  juce::Slider               freqSlider;
-  juce::Slider               freqFMSlider;
+  juce::Slider               freqSlider, FMFreqSlider, FMAmtSlider;
   juce::TextButton           muteButton;
   void                       sliderValueChanged(juce::Slider *slider) override;
   void                       buttonClicked(juce::Button *button) override;

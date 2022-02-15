@@ -1,21 +1,25 @@
 #ifndef SINE_H
 #define SINE_H
 
+#include <JuceHeader.h>
 #include <cmath>
 
-class Sine {
+class SineWave {
 
-  float                    mFreq, mPhase, mDeltaTimeTwoPi, mRadToTable;
-  float                    lerp(float y0, float y1);
+  int                      mTableLen;
+  float                    mFreq, mPhase, mRadToTable;
   juce::AudioBuffer<float> mWavetable;
 
+  float                    lerp(float y0, float y1);
+
 public:
-  Sine(int wtSize, float deltaTimeTwoPi);
-  void  setDeltaT(float deltaTimeTwoPi);
+  SineWave(int wtSize);
   void  setFreq(float freq);
+  float getFreq();
+  float getPhase();
   float lerp(float y0, float y1, float mod);
   float getAmpl();
-  float newPhase(float by);
-}
+  void  advanceByRads(float rads);
+};
 
 #endif

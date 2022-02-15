@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Sine.h"
 
 //==============================================================================
 jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
@@ -20,21 +21,12 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
 #endif
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-      )
+              ),
+#else
+    :
 #endif
+      mCarrier(2048), mModulator(2048)
 {
-  mWavetable  = juce::AudioBuffer<float>(1, 2048);
-  auto *write = mWavetable.getWritePointer(0);
-  for (int i = 0; i < mWavetable.getNumSamples(); i++) {
-    float currentRad = ((float)i / mWavetable.getNumSamples()) * 2.f * M_PI;
-    write[i]         = std::sin(currentRad);
-  }
-  mFreq    = 880.f;
-  mPhase   = 0.f;
-  mFMFreq  = 880.f;
-  mFMPhase = 0.f;
-  mGain    = 0.5f;
-  mMute    = true;
 }
 
 jkClassPlugAudioProcessor::~jkClassPlugAudioProcessor() {}
@@ -101,8 +93,7 @@ void jkClassPlugAudioProcessor::prepareToPlay(double sampleRate,
 {
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
-  mDeltaTime      = 1.f / sampleRate;
-  mDeltaTimeTwoPi = mDeltaTime * 2.f * M_PI;
+  mTwoPiSampleDeltaT = (1.f / sampleRate) * 2.f * M_PI;
 }
 
 void jkClassPlugAudioProcessor::releaseResources() {}
@@ -138,36 +129,27 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                                              juce::MidiBuffer &midiMessages)
 {
   juce::ScopedNoDenormals noDenormals;
-  auto                    totalNumInputChannels  = getTotalNumInputChannels();
   auto                    totalNumOutputChannels = getTotalNumOutputChannels();
 
-  for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-    buffer.clear(i, 0, buffer.getNumSamples());
-
-  auto tableRead   = mWavetable.getReadPointer(0);
-  auto channelPtrs = buffer.getArrayOfWritePointers();
+  auto                    channelPtrs = buffer.getArrayOfWritePointers();
   for (int i = 0; i < buffer.getNumSamples(); i++) {
-    float        currentTable = (mPhase * mRadToTable);
-    float        valueCalc;
-    unsigned int indexLow = static_cast<unsigned int>(currentTable);
-    unsigned int indexHigh =
-        indexLow + 1 >= mWavetable.getNumSamples() ? 0 : currentTable + 1;
-    float mod = currentTable - indexLow;
-    float y0  = tableRead[indexLow];
-    float y1  = tableRead[indexHigh];
-    valueCalc = (y1 - y0) * mod + y0;
-    for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+
+    float valueCalc = mCarrier.getAmpl();
+    for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       channelPtrs[channel][i] = mMute ? 0.f : valueCalc * mGain;
     }
-    mPhase += mFreq * mDeltaTimeTwoPi + fmFreq;
-    if (mPhase >= 2.f * M_PI) {
-      mPhase = std::fmod(mPhase, 2.f * M_PI);
-    }
+    float rads = mTwoPiSampleDeltaT * (1.f + mModulator.getAmpl());
+    mCarrier.advanceByRads(rads);
+    mModulator.advanceByRads(mTwoPiSampleDeltaT);
   }
 }
 
-void jkClassPlugAudioProcessor::setFreq(float freq) { mFreq = freq; }
-void jkClassPlugAudioProcessor::setFMFreq(float freq) { mFMFreq = freq; }
+void jkClassPlugAudioProcessor::setFreq(float freq) { mCarrier.setFreq(freq); }
+void jkClassPlugAudioProcessor::setFMRatio(float ratio)
+{
+  mFMRatio = ratio;
+  mModulator.setFreq(mFMRatio * mCarrier.getFreq());
+}
 void jkClassPlugAudioProcessor::muteToggle() { mMute = !mMute; }
 
 //==============================================================================

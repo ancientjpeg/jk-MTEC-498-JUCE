@@ -28,16 +28,26 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   freqSlider.addListener(this);
   addAndMakeVisible(&freqSlider);
 
-  freqFMSlider.setSliderStyle(juce::Slider::LinearBarVertical);
-  freqFMSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 20);
-  freqFMSlider.setRange(0.25f, 4.f, 0.f);
-  freqFMSlider.setSkewFactorFromMidPoint(1.f);
-  freqFMSlider.setValue(1.f);
-  freqFMSlider.onValueChange = [this]() {
-    audioProcessor.setFMFreq(freqFMSlider.getValue());
+  FMFreqSlider.setSliderStyle(juce::Slider::LinearBarVertical);
+  FMFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 20);
+  FMFreqSlider.setRange(0.25f, 4.f, 0.f);
+  FMFreqSlider.setSkewFactorFromMidPoint(1.f);
+  FMFreqSlider.setValue(1.f);
+  FMFreqSlider.onValueChange = [this]() {
+    audioProcessor.setFMRatio(FMFreqSlider.getValue());
   };
-  freqFMSlider.addListener(this);
-  addAndMakeVisible(&freqFMSlider);
+  FMFreqSlider.addListener(this);
+  addAndMakeVisible(&FMFreqSlider);
+
+  FMAmtSlider.setSliderStyle(juce::Slider::LinearBarVertical);
+  FMAmtSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 20);
+  FMAmtSlider.setRange(0.0f, 1.f, 0.f);
+  FMAmtSlider.setValue(0.5f);
+  FMAmtSlider.onValueChange = [this]() {
+    audioProcessor.setFMRatio(FMAmtSlider.getValue());
+  };
+  FMAmtSlider.addListener(this);
+  addAndMakeVisible(&FMAmtSlider);
 
   muteButton.setButtonText("MUTE TOGGLE");
   muteButton.addListener(this);
@@ -66,22 +76,12 @@ void jkClassPlugAudioProcessorEditor::resized()
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
   freqSlider.setBounds(40, 0, 80, getHeight() - 20);
-  freqFMSlider.setBounds(120, 0, 80, getHeight() - 20);
+  FMFreqSlider.setBounds(120, 0, 80, getHeight() - 20);
+  FMAmtSlider.setBounds(200, 0, 80, getHeight() - 20);
   muteButton.setBounds(400, 0, 150, 40);
 }
 
 void jkClassPlugAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
-  if (slider == &freqSlider) {
-    audioProcessor.setFreq(freqSlider.getValue());
-  }
-  if (slider == &freqFMSlider) {
-    audioProcessor.setFMFreq(freqSlider.getValue());
-  }
 }
-void jkClassPlugAudioProcessorEditor::buttonClicked(juce::Button *button)
-{
-  // if (button == &muteButton) {
-  //   audioProcessor.muteToggle();
-  // }
-}
+void jkClassPlugAudioProcessorEditor::buttonClicked(juce::Button *button) {}

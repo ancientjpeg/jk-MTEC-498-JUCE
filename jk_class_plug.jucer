@@ -8,6 +8,8 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="H6jskg" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="lE6H0L" name="Sine.cpp" compile="1" resource="0" file="Source/Sine.cpp"/>
+      <FILE id="n4wPYc" name="Sine.h" compile="0" resource="0" file="Source/Sine.h"/>
       <FILE id="tiwntw" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="VhBJmg" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
