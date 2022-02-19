@@ -16,9 +16,7 @@
 /**
  */
 class jkClassPlugAudioProcessor : public juce::AudioProcessor {
-  juce::UndoManager                  mUndoManager;
-  juce::AudioProcessorValueTreeState mParamState;
-  
+
 public:
   //==============================================================================
   jkClassPlugAudioProcessor();
@@ -53,11 +51,15 @@ public:
   const juce::String getProgramName(int index) override;
   void changeProgramName(int index, const juce::String &newName) override;
 
-  std::atomic<float>       *mFreq, *mFMAmt, *mFMRatio, *mGain, *mMute;
-  void                      setFreq(float freq);
-  void                      setFMRatio(float ratio);
-  void                      setFMAmt(float amt);
-  void                      muteToggle();
+  //=====================       PUBLIC MEMBERS ============================
+  juce::UndoManager                  mUndoManager;
+  juce::AudioProcessorValueTreeState mParamState;
+  std::atomic<float>                *mFreq, *mFMAmt, *mFMRatio, *mGain, *mMute;
+  void                               setFreq(float freq);
+  void                               setFMRatio(float ratio);
+  void                               setFMAmt(float amt);
+  void                               setGain(float gain);
+  void                               muteToggle();
 
   //==============================================================================
   void getStateInformation(juce::MemoryBlock &destData) override;
@@ -65,8 +67,8 @@ public:
 
 private:
   //==============================================================================
-  void setModFreq();
-  SineWave                           mCarrier, mModulator;
-  float                              mTwoPiSampleDeltaT;
+  void     setModFreq();
+  SineWave mCarrier, mModulator;
+  float    mTwoPiSampleDeltaT;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
 };

@@ -28,12 +28,12 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
       mUndoManager(30000, 200),
       mParamState(*this, &mUndoManager, juce::Identifier("jkClassPlug"),
                   getLayout()),
-mFreq   (mParamState.getRawParameterValue("freq")),
-mFMAmt  (mParamState.getRawParameterValue("FMAmt")),
-mFMRatio(mParamState.getRawParameterValue("FMRatio")),
-mGain   (mParamState.getRawParameterValue("gain")),
-mMute   (mParamState.getRawParameterValue("mute")),
-      mCarrier(*mFreq, 2048), mModulator((*mFreq * *mFMRatio), 2048)
+      mFreq(mParamState.getRawParameterValue("freq")),
+      mFMAmt(mParamState.getRawParameterValue("FMAmt")),
+      mFMRatio(mParamState.getRawParameterValue("FMRatio")),
+      mGain(mParamState.getRawParameterValue("gain")),
+      mMute(mParamState.getRawParameterValue("mute")), mCarrier(*mFreq, 2048),
+      mModulator((*mFreq * *mFMRatio), 2048)
 {
   setFreq(*mFreq);
   setFMRatio(*mFMRatio);
@@ -170,13 +170,18 @@ void jkClassPlugAudioProcessor::setFMRatio(float ratio)
   mParamState.getParameterAsValue("FMRatio") = ratio;
   setModFreq();
 }
-void jkClassPlugAudioProcessor::setModFreq(){
+void jkClassPlugAudioProcessor::setModFreq()
+{
   mModulator.setFreq(*mFMRatio * mCarrier.getFreq());
 }
 
 void jkClassPlugAudioProcessor::setFMAmt(float amt)
 {
   mParamState.getParameterAsValue("FMAmt") = amt;
+}
+void jkClassPlugAudioProcessor::setGain(float gain)
+{
+  mParamState.getParameterAsValue("gain") = gain;
 }
 void jkClassPlugAudioProcessor::muteToggle()
 {
