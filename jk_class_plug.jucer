@@ -4,8 +4,7 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
-      <FILE id="ZA93Jo" name="jkClassSliderBase.cpp" compile="1" resource="0"
-            file="Source/jkClassSliderBase.cpp"/>
+      <FILE id="hAX7GD" name="jkStyle.h" compile="0" resource="0" file="Source/jkStyle.h"/>
       <FILE id="oopTBp" name="jkClassSliderBase.h" compile="0" resource="0"
             file="Source/jkClassSliderBase.h"/>
       <FILE id="HcFQ0n" name="ParamDefines.cpp" compile="1" resource="0"

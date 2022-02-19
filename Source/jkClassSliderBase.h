@@ -11,10 +11,15 @@
 #ifndef JK_CLASS_SLIDER_BASE_H
 #define JK_CLASS_SLIDER_BASE_H
 
+#include <JuceHeader.h>
 class jkClassSliderBase : public juce::Slider {
 
 public:
-  jkClassSliderBase();
+  jkClassSliderBase()
+  {
+    setSliderStyle(juce::Slider::LinearVertical);
+    setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+  }
 };
 
 #endif

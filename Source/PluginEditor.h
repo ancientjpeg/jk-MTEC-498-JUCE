@@ -9,6 +9,8 @@
 #pragma once
 
 #include "PluginProcessor.h"
+#include "jkClassSliderBase.h"
+#include "jkStyle.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -27,10 +29,11 @@ private:
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   jkClassPlugAudioProcessor &audioProcessor;
-  juce::Slider               freqSlider, FMFreqSlider, FMAmtSlider, gainSlider;
+  jkClassSliderBase          freqSlider, FMFreqSlider, FMAmtSlider, gainSlider;
   juce::TextButton           muteButton;
   juce::AudioProcessorValueTreeState::SliderAttachment frq, fmf, fma, gn;
   juce::AudioProcessorValueTreeState::ButtonAttachment mb;
+  jkStyle                                              baseStyle;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessorEditor)
 };

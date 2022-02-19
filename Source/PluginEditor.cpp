@@ -22,8 +22,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
   setSize(800, 600);
-  freqSlider.setSliderStyle(juce::Slider::LinearVertical);
-  freqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+
   freqSlider.onValueChange = [this]() {
     audioProcessor.setFreq(freqSlider.getValue());
   };
@@ -32,8 +31,6 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   freqSlider.setValue(*p.mFreq);
   addAndMakeVisible(&freqSlider);
 
-  FMFreqSlider.setSliderStyle(juce::Slider::LinearVertical);
-  FMFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
   FMFreqSlider.onValueChange = [this]() {
     audioProcessor.setFMRatio(FMFreqSlider.getValue());
   };
@@ -42,8 +39,6 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   FMFreqSlider.setValue(*p.mFMRatio);
   addAndMakeVisible(&FMFreqSlider);
 
-  FMAmtSlider.setSliderStyle(juce::Slider::LinearVertical);
-  FMAmtSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
   FMAmtSlider.onValueChange = [this]() {
     audioProcessor.setFMAmt(FMAmtSlider.getValue());
   };
@@ -56,8 +51,6 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   gainSlider.setRange(0.f, 1.f, 0.f);
   gainSlider.setValue(*p.mGain);
-  gainSlider.setSliderStyle(juce::Slider::LinearVertical);
-  gainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
   addAndMakeVisible(gainSlider);
 
   muteButton.setButtonText("MUTE TOGGLE");
