@@ -18,7 +18,12 @@ public:
   jkClassSliderBase()
   {
     setSliderStyle(juce::Slider::LinearVertical);
-    setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+    setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 40);
+    setColour(juce::Slider::ColourIds::backgroundColourId,
+              juce::Colours::lightgrey);
+    setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::black);
+    setColour(juce::Slider::ColourIds::textBoxTextColourId,
+              juce::Colours::black);
   }
 };
 

@@ -22,12 +22,9 @@ public:
     using juce::LookAndFeel_V4;
     ColourScheme scheme(
         juce::Colours::white, juce::Colours::white, juce::Colours::white,
-        juce::Colours::black, juce::Colours::black, juce::Colours::white,
-        juce::Colours::black, juce::Colours::yellow, juce::Colours::black);
+        juce::Colours::black, juce::Colours::black, juce::Colours::black,
+        juce::Colours::black, juce::Colours::darkgrey, juce::Colours::black);
     setColourScheme(scheme);
-    setColour(juce::Slider::ColourIds::backgroundColourId,
-              juce::Colours::white);
-    setColour(juce::Slider::ColourIds::trackColourId, juce::Colours::white);
   }
 
 private:
