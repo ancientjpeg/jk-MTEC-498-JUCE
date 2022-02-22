@@ -31,9 +31,11 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
       mFMAmt(mParamState.getRawParameterValue("FMAmt")),
       mFMRatio(mParamState.getRawParameterValue("FMRatio")),
       mGain(mParamState.getRawParameterValue("gain")),
-      mMute(mParamState.getRawParameterValue("mute")), mVoices(8, *mFMRatio, *mFMAmt)
+      mMute(mParamState.getRawParameterValue("mute")),
+      mVoices(8, *mFMRatio, *mFMAmt)
 {
-  setFMRatio(*mFMRatio);
+  setFMRatio();
+  setFMAmt();
   mMidiState.addListener(&mVoices);
 }
 
@@ -154,27 +156,16 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
       channelPtrs[channel][i] = *mMute > 0.5f ? 0.f : valueCalc * *mGain;
     }
   }
-  
 }
 
-void jkClassPlugAudioProcessor::setFMRatio(float ratio)
-{
-  mParamState.getParameterAsValue("FMRatio") = ratio;
+void jkClassPlugAudioProcessor::setFMRatio()
+{ 
   mVoices.setRatio(*mFMRatio);
 }
 
-void jkClassPlugAudioProcessor::setFMAmt(float amt)
+void jkClassPlugAudioProcessor::setFMAmt()
 {
-  mParamState.getParameterAsValue("FMAmt") = amt;
   mVoices.setAmt(*mFMAmt);
-}
-void jkClassPlugAudioProcessor::setGain(float gain)
-{
-  mParamState.getParameterAsValue("gain") = gain;
-}
-void jkClassPlugAudioProcessor::muteToggle()
-{
-  mParamState.getParameterAsValue("mute") = *mMute > 0.5f ? 0.f : 1.f;
 }
 
 //==============================================================================

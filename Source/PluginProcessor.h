@@ -55,11 +55,8 @@ public:
   juce::UndoManager                  mUndoManager;
   juce::AudioProcessorValueTreeState mParamState;
   std::atomic<float>                *mFreq, *mFMAmt, *mFMRatio, *mGain, *mMute;
-  void                               setFreq(float freq);
-  void                               setFMRatio(float ratio);
-  void                               setFMAmt(float amt);
-  void                               setGain(float gain);
-  void                               muteToggle();
+  void                               setFMRatio();
+  void                               setFMAmt();
 
   //==============================================================================
   void getStateInformation(juce::MemoryBlock &destData) override;

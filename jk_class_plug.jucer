@@ -3,7 +3,7 @@
 <JUCERPROJECT id="xsxwR7" name="jkClassPlug" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              pluginAUMainType="'augn'" cppLanguageStandard="20">
+              pluginAUMainType="'augn'" cppLanguageStandard="20" pluginManufacturer="ancientjpeg">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
       <FILE id="LeYnxm" name="WaveTableOsc.cpp" compile="1" resource="0"
@@ -32,7 +32,7 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="jkClassPlug"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="jkClassPlug" vst3BinaryLocation="/Library/Audio/Plug-Ins/VST3"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="jkClassPlug"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

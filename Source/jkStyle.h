@@ -23,7 +23,7 @@ public:
     ColourScheme scheme(
         juce::Colours::white, juce::Colours::white, juce::Colours::white,
         juce::Colours::black, juce::Colours::black, juce::Colours::black,
-        juce::Colours::black, juce::Colours::darkgrey, juce::Colours::black);
+        juce::Colours::yellow, juce::Colours::red, juce::Colours::black);
     setColourScheme(scheme);
   }
 
