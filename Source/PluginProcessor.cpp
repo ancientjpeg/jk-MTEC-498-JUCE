@@ -28,14 +28,13 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
       mUndoManager(30000, 200),
       mParamState(*this, &mUndoManager, juce::Identifier("jkClassPlug"),
                   getLayout()),
-      mFreq(mParamState.getRawParameterValue("freq")),
       mFMAmt(mParamState.getRawParameterValue("FMAmt")),
       mFMRatio(mParamState.getRawParameterValue("FMRatio")),
       mGain(mParamState.getRawParameterValue("gain")),
-      mMute(mParamState.getRawParameterValue("mute")), mCarrier(*mFreq, 2048),
-      mModulator((*mFreq * *mFMRatio), 2048), mVoices(8)
+      mMute(mParamState.getRawParameterValue("mute")), mVoices(8, *mFMRatio, *mFMAmt)
 {
   setFMRatio(*mFMRatio);
+  mMidiState.addListener(&mVoices);
 }
 
 jkClassPlugAudioProcessor::~jkClassPlugAudioProcessor() {}
@@ -147,12 +146,15 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   auto                    totalNumOutputChannels = getTotalNumOutputChannels();
 
   auto                    channelPtrs = buffer.getArrayOfWritePointers();
-  for (int i = 0; i < buffer.getNumSamples(); i++) {
+  int                     numSamps    = buffer.getNumSamples();
+  mMidiState.processNextMidiBuffer(midiMessages, 0, numSamps, false);
+  for (int i = 0; i < numSamps; i++) {
     float valueCalc = mVoices.cycle(mTwoPiSampleDeltaT);
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       channelPtrs[channel][i] = *mMute > 0.5f ? 0.f : valueCalc * *mGain;
     }
   }
+  
 }
 
 void jkClassPlugAudioProcessor::setFMRatio(float ratio)

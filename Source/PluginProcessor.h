@@ -67,9 +67,9 @@ public:
 
 private:
   //==============================================================================
-  void           setModFreq();
-  WaveTableOsc   mCarrier, mModulator;
-  FMVoiceManager mVoices;
-  float          mTwoPiSampleDeltaT;
+  void                    setModFreq();
+  juce::MidiKeyboardState mMidiState;
+  FMVoiceManager          mVoices;
+  float                   mTwoPiSampleDeltaT;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
 };

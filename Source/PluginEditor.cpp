@@ -13,7 +13,6 @@
 jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
     jkClassPlugAudioProcessor &p)
     : AudioProcessorEditor(&p), audioProcessor(p),
-      frq(p.mParamState, "freq", freqSlider),
       fmf(p.mParamState, "FMRatio", FMFreqSlider),
       fma(p.mParamState, "FMAmt", FMAmtSlider),
       gn(p.mParamState, "gain", gainSlider),
@@ -24,22 +23,13 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   setSize(800, 600);
   setLookAndFeel(&baseStyle);
 
-  // freqSlider.onValueChange = [this]() {
-  //   audioProcessor.setFreq(freqSlider.getValue());
-  // };
-  freqSlider.setRange(20.f, 20000.f, 0.f);
-  freqSlider.setSkewFactorFromMidPoint(2000.f);
-  freqSlider.setValue(*p.mFreq);
-  freqSlider.setTextValueSuffix(" Freq");
-  addAndMakeVisible(&freqSlider);
-
   FMFreqSlider.onValueChange = [this]() {
     audioProcessor.setFMRatio(FMFreqSlider.getValue());
   };
   FMFreqSlider.setRange(0.25f, 4.f, 0.f);
   FMFreqSlider.setSkewFactorFromMidPoint(1.f);
   FMFreqSlider.setValue(*p.mFMRatio);
-  freqSlider.setTextValueSuffix(" FM Ratio");
+  FMFreqSlider.setTextValueSuffix(" FM Ratio");
   addAndMakeVisible(&FMFreqSlider);
 
   FMAmtSlider.onValueChange = [this]() {
@@ -47,7 +37,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   FMAmtSlider.setRange(0.0f, 1.f, 0.f);
   FMAmtSlider.setValue(*p.mFMAmt);
-  freqSlider.setTextValueSuffix(" FM Amt");
+  FMAmtSlider.setTextValueSuffix(" FM Amt");
   addAndMakeVisible(&FMAmtSlider);
 
   gainSlider.onValueChange = [this]() {
@@ -55,7 +45,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   };
   gainSlider.setRange(0.f, 1.f, 0.f);
   gainSlider.setValue(*p.mGain);
-  freqSlider.setTextValueSuffix(" Gain");
+  gainSlider.setTextValueSuffix(" Volume");
   addAndMakeVisible(gainSlider);
 
   muteButton.setButtonText("MUTE TOGGLE");
@@ -82,7 +72,6 @@ void jkClassPlugAudioProcessorEditor::resized()
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
   int sliderWidth = 100, sep = 25, slHeight = getHeight() - 80;
-  freqSlider.setBounds(sep, 0, sliderWidth, slHeight);
   FMFreqSlider.setBounds(2 * sep + sliderWidth, 0, sliderWidth, slHeight);
   FMAmtSlider.setBounds(3 * sep + 2 * sliderWidth, 0, sliderWidth, slHeight);
   gainSlider.setBounds(4 * sep + 3 * sliderWidth, 0, sliderWidth, slHeight);

@@ -1,7 +1,7 @@
 #include "WaveTableOsc.h"
 
 WaveTableOsc::WaveTableOsc(float freqInit, int wtSize)
-    : mTableLen(2048), mFreq(freqInit), mPhase(0.f), mWavetable(1, mTableLen)
+    : mTableLen(2048), mPhase(0.f), mFreq(freqInit), mWavetable(1, mTableLen)
 {
   auto *write = mWavetable.getWritePointer(0);
   for (int i = 0; i < mWavetable.getNumSamples(); i++) {

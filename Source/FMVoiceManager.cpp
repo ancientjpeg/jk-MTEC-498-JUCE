@@ -10,24 +10,33 @@
 
 #include "FMVoice.h"
 
-FMVoiceManager::FMVoiceManager(int maxVoices) : m_ratio(1.f)
+FMVoiceManager::FMVoiceManager(int maxVoices, float ratio_init, float amt_init) : m_ratio(ratio_init), m_amt(amt_init)
 {
   voices_internal = new FMVoice[maxVoices];
   for (int i = 0; i < maxVoices; i++) {
     inactive.push(voices_internal + i);
   }
 }
-FMVoiceManager::~FMVoiceManager() { delete voices_internal; }
+FMVoiceManager::~FMVoiceManager()
+{ /* delete voices_internal; */
+}
 
-void FMVoiceManager::startNote(int midiNote, int vel = 127)
+void FMVoiceManager::startNote(int midiNote, float vel)
 {
   if (inactive.empty())
     return;
-  FMVoice *newVoice = inactive.top();
-  inactive.pop();
+  try {
+    active.at(midiNote);
+  }
+  catch (std::out_of_range) {
+    FMVoice *newVoice = inactive.top();
+    inactive.pop();
 
-  newVoice->play(midiNote, m_ratio, m_amt);
-  active[midiNote] = newVoice;
+    newVoice->play(midiNote, m_ratio, m_amt);
+    active[midiNote] = newVoice;
+    return;
+  }
+  std::cerr << "Note " << midiNote << " is already playing.\n";
 }
 
 void FMVoiceManager::stopNote(int midiNote)
@@ -46,6 +55,7 @@ void FMVoiceManager::stopNote(int midiNote)
 
 void FMVoiceManager::setRatio(float ratio)
 {
+  m_ratio = ratio;
   for (auto &[key, v] : active) {
     v->setRatio(ratio);
   }
@@ -53,6 +63,7 @@ void FMVoiceManager::setRatio(float ratio)
 
 void FMVoiceManager::setAmt(float amt)
 {
+  m_amt = amt;
   for (auto &[key, v] : active) {
     v->setAmt(amt);
   }
@@ -65,4 +76,16 @@ float FMVoiceManager::cycle(float rads)
     ret += v->cycleAndReturn(rads);
   }
   return ret;
+}
+void FMVoiceManager::handleNoteOn(juce::MidiKeyboardState *source,
+                                  int midiChannel, int midiNoteNumber,
+                                  float velocity)
+{
+  startNote(midiNoteNumber, velocity);
+}
+void FMVoiceManager::handleNoteOff(juce::MidiKeyboardState *source,
+                                   int midiChannel, int midiNoteNumber,
+                                   float velocity)
+{
+  stopNote(midiNoteNumber);
 }

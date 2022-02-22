@@ -15,9 +15,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout getLayout()
   using juce::String;
   juce::AudioProcessorValueTreeState::ParameterLayout layout;
   layout.add(std::make_unique<juce::AudioParameterFloat>(
-      String("freq"), String("freq"),
-      juce::NormalisableRange<float>(20.f, 20000.f), 880.f));
-  layout.add(std::make_unique<juce::AudioParameterFloat>(
       String("FMRatio"), String("FM ratio"),
       juce::NormalisableRange<float>(0.25f, 4.f), 2.f));
   layout.add(std::make_unique<juce::AudioParameterFloat>(

@@ -35,18 +35,23 @@ public:
   bool  isPlaying;
 };
 
-class FMVoiceManager {
+class FMVoiceManager : public juce::MidiKeyboardStateListener {
   std::stack<FMVoice *>              inactive;
   std::unordered_map<int, FMVoice *> active;
   FMVoice                           *voices_internal;
   float                              m_ratio, m_amt;
 
 public:
-  void  startNote(int midiNote, int vel = 127);
+  FMVoiceManager(int maxVoices, float ratio_init, float amt_init);
+  ~FMVoiceManager();
+  void  startNote(int midiNote, float vel);
   void  stopNote(int midiNote);
   void  setRatio(float ratio);
   void  setAmt(float amt);
   float cycle(float rads);
-  FMVoiceManager(int maxVoices);
-  ~FMVoiceManager();
+  void  handleNoteOn(juce::MidiKeyboardState *source, int midiChannel,
+                     int midiNoteNumber, float velocity) override;
+  void  handleNoteOff(juce::MidiKeyboardState *source, int midiChannel,
+                      int midiNoteNumber, float velocity) override;
+
 };

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="xsxwR7" name="jkClassPlug" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              pluginAUMainType="'augn'" cppLanguageStandard="20">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
       <FILE id="LeYnxm" name="WaveTableOsc.cpp" compile="1" resource="0"
