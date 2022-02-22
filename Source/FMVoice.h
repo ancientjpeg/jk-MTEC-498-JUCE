@@ -9,3 +9,21 @@
 */
 
 #pragma once
+#include <JuceHeader.h>
+#include <Sine.h>
+
+class FMVoice {
+  void  cycle();
+  float calcAmp();
+
+  float phase;
+
+public:
+  FMVoice();
+  void  startNote();
+  void  stopNote();
+  float getAmpThisCycle();
+
+  int   note;
+  bool  isPlaying;
+};
