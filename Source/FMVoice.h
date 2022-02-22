@@ -12,7 +12,7 @@
 #include "WaveTableOsc.h"
 #include <JuceHeader.h>
 #include <stack>
-#include <vector>
+#include <unordered_map>
 
 class FMVoice {
   void         cycle();
@@ -23,8 +23,8 @@ class FMVoice {
 
 public:
   FMVoice();
-  void  startNote();
-  void  stopNote();
+  void  play(int note);
+  void  setRatio(float ratio);
   float getAmpThisCycle();
 
   int   note;
@@ -32,11 +32,14 @@ public:
 };
 
 class FMVoiceManager {
-  std::stack<FMVoice *>  inactive;
-  std::vector<FMVoice *> active;
-  FMVoice               *voices_internal;
+  std::stack<FMVoice *>              inactive;
+  std::unordered_map<int, FMVoice *> active;
+  FMVoice                           *voices_internal;
 
 public:
+  void startNote(int midiNote, int vel = 127);
+  void stopNote(int midiNote);
+  void setRatio(float ratio);
   FMVoiceManager(int maxVoices);
   ~FMVoiceManager();
 };
