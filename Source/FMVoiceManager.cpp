@@ -10,9 +10,7 @@
 
 #include "FMVoice.h"
 
-typedef std::pair<int, FMVoice *> fmv_t;
-
-FMVoiceManager::FMVoiceManager(int maxVoices)
+FMVoiceManager::FMVoiceManager(int maxVoices) : m_ratio(1.f)
 {
   voices_internal = new FMVoice[maxVoices];
   for (int i = 0; i < maxVoices; i++) {
@@ -28,7 +26,8 @@ void FMVoiceManager::startNote(int midiNote, int vel = 127)
   FMVoice *newVoice = inactive.top();
   inactive.pop();
 
-  newVoice->play(midiNote);
+  newVoice->play(midiNote, m_ratio, m_amt);
+  active[midiNote] = newVoice;
 }
 
 void FMVoiceManager::stopNote(int midiNote)
@@ -47,7 +46,23 @@ void FMVoiceManager::stopNote(int midiNote)
 
 void FMVoiceManager::setRatio(float ratio)
 {
-  for (fmv_t v : active) {
-    v.second->setRatio(ratio);
+  for (auto &[key, v] : active) {
+    v->setRatio(ratio);
   }
+}
+
+void FMVoiceManager::setAmt(float amt)
+{
+  for (auto &[key, v] : active) {
+    v->setAmt(amt);
+  }
+}
+
+float FMVoiceManager::cycle(float rads)
+{
+  float ret = 0.f;
+  for (auto &[key, v] : active) {
+    ret += v->cycleAndReturn(rads);
+  }
+  return ret;
 }

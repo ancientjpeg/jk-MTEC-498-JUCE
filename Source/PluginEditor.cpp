@@ -24,9 +24,9 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   setSize(800, 600);
   setLookAndFeel(&baseStyle);
 
-  freqSlider.onValueChange = [this]() {
-    audioProcessor.setFreq(freqSlider.getValue());
-  };
+  // freqSlider.onValueChange = [this]() {
+  //   audioProcessor.setFreq(freqSlider.getValue());
+  // };
   freqSlider.setRange(20.f, 20000.f, 0.f);
   freqSlider.setSkewFactorFromMidPoint(2000.f);
   freqSlider.setValue(*p.mFreq);

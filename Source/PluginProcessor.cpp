@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "Sine.h"
+#include "WaveTableOsc.h"
 
 //==============================================================================
 jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
@@ -33,9 +33,8 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
       mFMRatio(mParamState.getRawParameterValue("FMRatio")),
       mGain(mParamState.getRawParameterValue("gain")),
       mMute(mParamState.getRawParameterValue("mute")), mCarrier(*mFreq, 2048),
-      mModulator((*mFreq * *mFMRatio), 2048)
+      mModulator((*mFreq * *mFMRatio), 2048), mVoices(8)
 {
-  setFreq(*mFreq);
   setFMRatio(*mFMRatio);
 }
 
@@ -149,38 +148,23 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
 
   auto                    channelPtrs = buffer.getArrayOfWritePointers();
   for (int i = 0; i < buffer.getNumSamples(); i++) {
-    float valueCalc = mCarrier.getAmpl();
+    float valueCalc = mVoices.cycle(mTwoPiSampleDeltaT);
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       channelPtrs[channel][i] = *mMute > 0.5f ? 0.f : valueCalc * *mGain;
     }
-    float carrierRads =
-        mTwoPiSampleDeltaT * (1. + mModulator.getAmpl() * *mFMAmt);
-    mCarrier.advanceByRads(carrierRads);
-    mModulator.advanceByRads(mTwoPiSampleDeltaT);
-    mCarrier.oneSamplePassed();
-    mModulator.oneSamplePassed();
   }
 }
 
-void jkClassPlugAudioProcessor::setFreq(float freq)
-{
-  mParamState.getParameterAsValue("freq") = freq;
-  mCarrier.setFreq(*mFreq);
-  setModFreq();
-}
 void jkClassPlugAudioProcessor::setFMRatio(float ratio)
 {
   mParamState.getParameterAsValue("FMRatio") = ratio;
-  setModFreq();
-}
-void jkClassPlugAudioProcessor::setModFreq()
-{
-  mModulator.setFreq(*mFMRatio * mCarrier.getFreq());
+  mVoices.setRatio(*mFMRatio);
 }
 
 void jkClassPlugAudioProcessor::setFMAmt(float amt)
 {
   mParamState.getParameterAsValue("FMAmt") = amt;
+  mVoices.setAmt(*mFMAmt);
 }
 void jkClassPlugAudioProcessor::setGain(float gain)
 {

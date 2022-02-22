@@ -6,8 +6,8 @@
 class WaveTableOsc {
 
   int                              mTableLen;
-  float                            mFreq, mPhase, mRadToTable;
-  juce::LinearSmoothedValue<float> mFreqSmooth;
+  float                            mPhase, mRadToTable;
+  juce::LinearSmoothedValue<float> mFreq;
   juce::AudioBuffer<float>         mWavetable;
 
   float                            lerp(float y0, float y1);
@@ -15,12 +15,12 @@ class WaveTableOsc {
 public:
   WaveTableOsc(float freqInit, int wtSize);
   void  setFreq(float freq);
+  void  resetPhase();
   void  oneSamplePassed();
-  float getFreq();
-  float getPhase();
   float lerp(float y0, float y1, float mod);
   float getAmpl();
   void  advanceByRads(float rads);
+  float cycle(float rads);
 };
 
 #endif

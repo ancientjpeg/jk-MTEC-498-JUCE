@@ -8,8 +8,8 @@
 
 #pragma once
 
+#include "FMVoice.h"
 #include "ParamDefines.h"
-#include "Sine.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -67,8 +67,9 @@ public:
 
 private:
   //==============================================================================
-  void         setModFreq();
-  WaveTableOsc mCarrier, mModulator;
-  float        mTwoPiSampleDeltaT;
+  void           setModFreq();
+  WaveTableOsc   mCarrier, mModulator;
+  FMVoiceManager mVoices;
+  float          mTwoPiSampleDeltaT;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
 };
