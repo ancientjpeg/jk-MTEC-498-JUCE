@@ -9,14 +9,17 @@
 */
 
 #pragma once
+#include "WaveTableOsc.h"
 #include <JuceHeader.h>
-#include <Sine.h>
+#include <stack>
+#include <vector>
 
 class FMVoice {
-  void  cycle();
-  float calcAmp();
+  void         cycle();
+  float        calcAmp();
 
-  float phase;
+  float        freq, phase, ratio;
+  WaveTableOsc car, mod;
 
 public:
   FMVoice();
@@ -26,4 +29,14 @@ public:
 
   int   note;
   bool  isPlaying;
+};
+
+class FMVoiceManager {
+  std::stack<FMVoice *>  inactive;
+  std::vector<FMVoice *> active;
+  FMVoice               *voices_internal;
+
+public:
+  FMVoiceManager(int maxVoices);
+  ~FMVoiceManager();
 };

@@ -3,17 +3,17 @@
 
 #include <JuceHeader.h>
 
-class SineWave {
+class WaveTableOsc {
 
-  int                      mTableLen;
-  float                    mFreq, mPhase, mRadToTable;
+  int                              mTableLen;
+  float                            mFreq, mPhase, mRadToTable;
   juce::LinearSmoothedValue<float> mFreqSmooth;
-  juce::AudioBuffer<float> mWavetable;
+  juce::AudioBuffer<float>         mWavetable;
 
-  float                    lerp(float y0, float y1);
+  float                            lerp(float y0, float y1);
 
 public:
-  SineWave(float freqInit, int wtSize);
+  WaveTableOsc(float freqInit, int wtSize);
   void  setFreq(float freq);
   void  oneSamplePassed();
   float getFreq();

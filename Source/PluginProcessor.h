@@ -67,8 +67,8 @@ public:
 
 private:
   //==============================================================================
-  void     setModFreq();
-  SineWave mCarrier, mModulator;
-  float    mTwoPiSampleDeltaT;
+  void         setModFreq();
+  WaveTableOsc mCarrier, mModulator;
+  float        mTwoPiSampleDeltaT;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
 };

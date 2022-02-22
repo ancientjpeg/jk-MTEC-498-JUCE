@@ -1,7 +1,8 @@
 #include "Sine.h"
 
-SineWave::SineWave(float freqInit, int wtSize)
-    : mTableLen(2048), mFreq(freqInit), mPhase(0.f), mFreqSmooth(mFreq), mWavetable(1, mTableLen)
+WaveTableOsc::WaveTableOsc(float freqInit, int wtSize)
+    : mTableLen(2048), mFreq(freqInit), mPhase(0.f), mFreqSmooth(mFreq),
+      mWavetable(1, mTableLen)
 {
   auto *write = mWavetable.getWritePointer(0);
   for (int i = 0; i < mWavetable.getNumSamples(); i++) {
@@ -11,16 +12,16 @@ SineWave::SineWave(float freqInit, int wtSize)
   mRadToTable = (mWavetable.getNumSamples() - 1) / (2.f * M_PI);
 }
 
-void  SineWave::setFreq(float freq) { mFreqSmooth.setTargetValue(freq); }
-void  SineWave::oneSamplePassed() { mFreq = mFreqSmooth.getNextValue(); }
-float SineWave::getFreq() { return mFreq; }
-float SineWave::getPhase() { return mPhase; }
-float SineWave::lerp(float y0, float y1, float mod)
+void  WaveTableOsc::setFreq(float freq) { mFreqSmooth.setTargetValue(freq); }
+void  WaveTableOsc::oneSamplePassed() { mFreq = mFreqSmooth.getNextValue(); }
+float WaveTableOsc::getFreq() { return mFreq; }
+float WaveTableOsc::getPhase() { return mPhase; }
+float WaveTableOsc::lerp(float y0, float y1, float mod)
 {
   return (y1 - y0) * mod + y0;
 }
 
-float SineWave::getAmpl()
+float WaveTableOsc::getAmpl()
 {
   float x           = mPhase * mRadToTable;
   int   x0          = static_cast<int>(x);
@@ -34,7 +35,7 @@ float SineWave::getAmpl()
   return ampl;
 }
 
-void SineWave::advanceByRads(float rads)
+void WaveTableOsc::advanceByRads(float rads)
 {
   mPhase += rads * mFreq;
   if (mPhase >= 2.f * M_PI) {

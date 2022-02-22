@@ -4,8 +4,13 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
+      <FILE id="LeYnxm" name="WaveTableOsc.cpp" compile="1" resource="0"
+            file="Source/WaveTableOsc.cpp"/>
+      <FILE id="V35J8F" name="WaveTableOsc.h" compile="0" resource="0" file="Source/WaveTableOsc.h"/>
       <FILE id="Xk19Rv" name="FMVoice.cpp" compile="1" resource="0" file="Source/FMVoice.cpp"/>
       <FILE id="dTP7kx" name="FMVoice.h" compile="0" resource="0" file="Source/FMVoice.h"/>
+      <FILE id="ewwDfA" name="FMVoiceManager.cpp" compile="1" resource="0"
+            file="Source/FMVoiceManager.cpp"/>
       <FILE id="hAX7GD" name="jkStyle.h" compile="0" resource="0" file="Source/jkStyle.h"/>
       <FILE id="oopTBp" name="jkClassSliderBase.h" compile="0" resource="0"
             file="Source/jkClassSliderBase.h"/>
@@ -16,8 +21,6 @@
       <FILE id="djKYLV" name="ParamDefines.h" compile="0" resource="0" file="Source/ParamDefines.h"/>
       <FILE id="H6jskg" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="lE6H0L" name="Sine.cpp" compile="1" resource="0" file="Source/Sine.cpp"/>
-      <FILE id="n4wPYc" name="Sine.h" compile="0" resource="0" file="Source/Sine.h"/>
       <FILE id="tiwntw" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="VhBJmg" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
