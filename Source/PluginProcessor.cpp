@@ -44,6 +44,9 @@ jkClassPlugAudioProcessor::~jkClassPlugAudioProcessor() {}
 //==============================================================================
 const juce::String jkClassPlugAudioProcessor::getName() const
 {
+#ifndef JucePlugin_Name
+#define JucePlugin_Name "VSCode please stop"
+#endif
   return JucePlugin_Name;
 }
 
