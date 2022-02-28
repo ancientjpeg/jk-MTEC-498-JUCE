@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#include <JuceHeader.h>
 
 class CircularBuffer {
   unsigned int head, tail, payload, capacity;
@@ -20,7 +21,25 @@ public:
   {
   }
   ~CircularBuffer() { delete[] buffer; }
-  void  readTo(float *dest, unsigned int num) {}
-  void  push() {}
-  float pop() {}
+  void readToNoPop(float *dest, unsigned int num) {}
+  void push(float sample)
+  {
+    if (payload == capacity)
+      std::cerr << "buffer at capacity.\n";
+
+    buffer[tail] = sample;
+    tail         = tail + 1 < capacity ? tail + 1 : tail + 1 - capacity;
+    payload++;
+  }
+  float pop()
+  {
+    if (payload == 0) {
+      std::cerr << "tried to pop off an empty buffer.\n";
+      exit(1);
+    }
+    float ret = buffer[head];
+    head      = head + 1 < capacity ? head + 1 : head + 1 - capacity;
+    payload--;
+    return ret;
+  }
 };
