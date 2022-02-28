@@ -19,6 +19,7 @@ public:
   CircularBuffer(unsigned int size)
       : head(0), tail(0), payload(0), capacity(size), buffer(new float[size])
   {
+    std::memset(buffer, 0, sizeof(float) * size);
   }
   ~CircularBuffer() { delete[] buffer; }
   void readToNoPop(float *dest, unsigned int num) {}

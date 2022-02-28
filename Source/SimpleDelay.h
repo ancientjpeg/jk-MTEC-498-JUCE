@@ -15,5 +15,5 @@ class SimpleDelay {
   CircularBuffer cbuff;
 
 public:
-  SimpleDelay();
+  SimpleDelay(float maxSeconds, float sampleRate);
 };

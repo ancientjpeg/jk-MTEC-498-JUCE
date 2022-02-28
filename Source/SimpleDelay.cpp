@@ -10,4 +10,7 @@
 
 #include "SimpleDelay.h"
 
-SimpleDelay::SimpleDelay() : cbuff(8192) {}
+SimpleDelay::SimpleDelay(float maxSeconds, float sampleRate)
+    : cbuff(std::ceil(maxSeconds * sampleRate))
+{
+}
