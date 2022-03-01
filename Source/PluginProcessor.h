@@ -10,9 +10,8 @@
 
 #include "DSP/Delays/SimpleMCDelay.h"
 #include "DSP/Generators/FMVoice.h"
-#include "ParamDefines.h"
+#include "Management/Parameters/ParamDefines.h"
 #include <JuceHeader.h>
-
 
 //==============================================================================
 /**
