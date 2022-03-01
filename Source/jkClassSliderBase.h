@@ -17,8 +17,8 @@ class jkClassSliderBase : public juce::Slider {
 public:
   jkClassSliderBase()
   {
-    setSliderStyle(juce::Slider::LinearVertical);
-    setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 40);
+    setSliderStyle(juce::Slider::LinearBarVertical);
+    setTextBoxStyle(juce::Slider::NoTextBox);
     setColour(juce::Slider::ColourIds::backgroundColourId,
               juce::Colours::lightgrey);
     setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::black);

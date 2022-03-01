@@ -16,7 +16,7 @@
 //==============================================================================
 /**
  */
-class jkClassPlugAudioProcessorEditor : public juce::AudioProcessorEditor{
+class jkClassPlugAudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
   jkClassPlugAudioProcessorEditor(jkClassPlugAudioProcessor &);
   ~jkClassPlugAudioProcessorEditor() override;
@@ -24,13 +24,16 @@ public:
   //==============================================================================
   void paint(juce::Graphics &) override;
   void resized() override;
+
 private:
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   jkClassPlugAudioProcessor &audioProcessor;
-  jkClassSliderBase          FMFreqSlider, FMAmtSlider, gainSlider;
-  juce::TextButton           muteButton;
-  juce::AudioProcessorValueTreeState::SliderAttachment fmf, fma, gn;
+  jkClassSliderBase FMFreqSlider, FMAmtSlider, gainSlider, mDelayTimeSlider,
+      mDelayFBSlider, mDelayMixSlider;
+  juce::TextButton                                     muteButton;
+  juce::AudioProcessorValueTreeState::SliderAttachment fmf, fma, gn, dt, dfb,
+      dm;
   juce::AudioProcessorValueTreeState::ButtonAttachment mb;
   jkStyle                                              baseStyle;
 

@@ -27,6 +27,7 @@ void SimpleMCDelay::prepare(float delaySeconds, float feedback, float mix,
 {
   mSampleRate = sampleRate;
   mDelaySamples.setCurrentAndTargetValue(delaySeconds * mSampleRate);
+  mFeedback.setCurrentAndTargetValue(feedback);
   setParams(delaySeconds, feedback, mix);
   mMaxSamples = std::ceil(maxSeconds * mSampleRate);
   mBuffers    = new float[mMaxSamples * numChans];
@@ -36,10 +37,10 @@ void SimpleMCDelay::prepare(float delaySeconds, float feedback, float mix,
 
 void SimpleMCDelay::setParams(float delaySeconds, float feedback, float mix)
 {
+  mMix    = mix;
+  mMixInv = 1.f - mMix;
   mDelaySamples.setTargetValue(delaySeconds * mSampleRate);
-  mMix      = mix;
-  mMixInv   = 1.f - mMix;
-  mFeedback = feedback;
+  mFeedback.setTargetValue(feedback);
 }
 
 void SimpleMCDelay::processBlocks(float **blocks, int numChans, int numSamples)

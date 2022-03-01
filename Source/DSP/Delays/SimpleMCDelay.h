@@ -12,9 +12,9 @@
 #include <JuceHeader.h>
 
 class SimpleMCDelay {
-  int   mMaxSamples, *mWriteHeads;
-  float mMix, mMixInv, mFeedback, mSampleRate, mOutputPrev;
-  juce::LinearSmoothedValue<float> mDelaySamples;
+  int                              mMaxSamples, *mWriteHeads;
+  float                            mMix, mMixInv, mSampleRate, mOutputPrev;
+  juce::LinearSmoothedValue<float> mDelaySamples, mFeedBack;
   float                           *mBuffers;
   bool                             prepared;
 

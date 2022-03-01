@@ -13,48 +13,29 @@
 jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
     jkClassPlugAudioProcessor &p)
     : AudioProcessorEditor(&p), audioProcessor(p),
-      fmf(p.mParamState, "FMRatio", FMFreqSlider),
-      fma(p.mParamState, "FMAmt", FMAmtSlider),
-      gn(p.mParamState, "gain", gainSlider),
-      mb(p.mParamState, "mute", muteButton)
+      fmf(p.mParamState, "FM Ratio", FMFreqSlider),
+      fma(p.mParamState, "FM Amount", FMAmtSlider),
+      dt(p.mParamState, "Delay Time", mDelayTimeSlider),
+      dfb(p.mParamState, "Delay Feedback", mDelayFBSlider),
+      dm(p.mParamState, "Delay Mix", mDelayMixSlider),
+      gn(p.mParamState, "Gain", gainSlider),
+      mb(p.mParamState, "Mute", muteButton)
 {
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
   setSize(800, 600);
   setLookAndFeel(&baseStyle);
 
-  FMFreqSlider.onValueChange = [this]() {
-    audioProcessor.mFMRatio->store(FMFreqSlider.getValue());
-    audioProcessor.setFMRatio();
-  };
-  FMFreqSlider.setRange(0.25f, 4.f, 0.f);
   FMFreqSlider.setSkewFactorFromMidPoint(1.f);
-  FMFreqSlider.setValue(*p.mFMRatio);
-  FMFreqSlider.setTextValueSuffix(" FM Ratio");
-  addAndMakeVisible(&FMFreqSlider);
+  addAndMakeVisible(FMFreqSlider);
+  addAndMakeVisible(FMAmtSlider);
 
-  FMAmtSlider.onValueChange = [this]() {
-    audioProcessor.mFMAmt->store(FMAmtSlider.getValue());
-    audioProcessor.setFMAmt();
-  };
-  FMAmtSlider.setRange(0.0f, 1.f, 0.f);
-  FMAmtSlider.setValue(*p.mFMAmt);
-  FMAmtSlider.setTextValueSuffix(" FM Amt");
-  addAndMakeVisible(&FMAmtSlider);
-  gainSlider.onValueChange = [this]() {
-    audioProcessor.mMute->store(gainSlider.getValue());
-  };
-  gainSlider.setRange(0.f, 1.f, 0.f);
-  gainSlider.setValue(*p.mGain);
-  gainSlider.setTextValueSuffix(" Volume");
+  addAndMakeVisible(mDelayTimeSlider);
+  addAndMakeVisible(mDelayFBSlider);
+  addAndMakeVisible(mDelayMixSlider);
+
   addAndMakeVisible(gainSlider);
-
-  muteButton.setButtonText("MUTE TOGGLE");
   muteButton.setClickingTogglesState(true);
-//  muteButton.setToggleState(*p.mMute, false);
-  muteButton.onClick = [this]() {
-    audioProcessor.mMute->store(muteButton.getToggleState());
-  };
   addAndMakeVisible(muteButton);
 }
 
@@ -68,17 +49,34 @@ void jkClassPlugAudioProcessorEditor::paint(juce::Graphics &g)
   g.fillAll(
       getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
 
-  g.setColour(juce::Colours::white);
-  g.setFont(15.0f);
+  g.setFont(juce::Font(12));
+  int txtOff = 12;
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], FMFreqSlider.getX(),
+                       FMFreqSlider.getBottom() - txtOff);
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], FMAmtSlider.getX(),
+                       FMAmtSlider.getBottom() - txtOff);
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], mDelayTimeSlider.getX(),
+                       mDelayTimeSlider.getBottom() - txtOff);
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], mDelayFBSlider.getX(),
+                       mDelayFBSlider.getBottom() - txtOff);
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], mDelayMixSlider.getX(),
+                       mDelayMixSlider.getBottom() - txtOff);
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], gainSlider.getX(),
+                       gainSlider.getBottom() - txtOff);
+  g.drawSingleLineText(PARAM_NAMES[PARAM_FM_RATIO], muteButton.getX(),
+                       muteButton.getBottom() - txtOff);
 }
 
 void jkClassPlugAudioProcessorEditor::resized()
 {
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
-  int sliderWidth = 100, sep = 25, slHeight = getHeight() - 80;
+  int sliderWidth = 60, sep = 15, slHeight = getHeight() - 80;
   FMFreqSlider.setBounds(2 * sep + sliderWidth, 0, sliderWidth, slHeight);
   FMAmtSlider.setBounds(3 * sep + 2 * sliderWidth, 0, sliderWidth, slHeight);
   gainSlider.setBounds(4 * sep + 3 * sliderWidth, 0, sliderWidth, slHeight);
-  muteButton.setBounds(5 * sep + 4 * sliderWidth, 0, 200, 40);
+  gainSlider.setBounds(5 * sep + 4 * sliderWidth, 0, sliderWidth, slHeight);
+  gainSlider.setBounds(6 * sep + 5 * sliderWidth, 0, sliderWidth, slHeight);
+  gainSlider.setBounds(7 * sep + 6 * sliderWidth, 0, sliderWidth, slHeight);
+  muteButton.setBounds(5 * sep + 4 * sliderWidth, getHeight() - 40, 200, 40);
 }

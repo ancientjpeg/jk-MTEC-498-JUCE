@@ -52,12 +52,9 @@ public:
   const juce::String getProgramName(int index) override;
   void changeProgramName(int index, const juce::String &newName) override;
 
-  //=====================       PUBLIC MEMBERS ============================
+  //=========================== PUBLIC MEMBERS =================================
   juce::UndoManager                  mUndoManager;
   juce::AudioProcessorValueTreeState mParamState;
-  std::atomic<float>                *mFreq, *mFMAmt, *mFMRatio, *mGain, *mMute;
-  void                               setFMRatio();
-  void                               setFMAmt();
 
   //==============================================================================
   void getStateInformation(juce::MemoryBlock &destData) override;

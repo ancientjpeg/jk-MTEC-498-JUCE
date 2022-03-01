@@ -148,9 +148,24 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   juce::ScopedNoDenormals noDenormals;
   auto                    totalNumOutputChannels = getTotalNumOutputChannels();
 
-  float**                 channelPtrs = buffer.getArrayOfWritePointers();
+  float                 **channelPtrs = buffer.getArrayOfWritePointers();
   int                     numSamps    = buffer.getNumSamples();
   mMidiState.processNextMidiBuffer(midiMessages, 0, numSamps, false);
+
+  /* check params */
+  mVoices.setRatio(
+      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_RATIO])->load());
+  mVoices.setAmt(
+      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_AMT])->load());
+  mDelay.setParams(
+      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_TIME])->load(),
+      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_FEEDBACK])
+          ->load(),
+      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_MIX])->load());
+  float gain =
+      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_GAIN])->load();
+
+  /* process */
   for (int i = 0; i < numSamps; i++) {
     float valueCalc = mVoices.cycle(mTwoPiSampleDeltaT);
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
@@ -158,12 +173,14 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     }
   }
   mDelay.processBlocks(channelPtrs, 2, numSamps);
-  
+
+  /* check mute */
+  if (mParamState.getRawParameterValue(PARAM_NAMES[PARAM_MUTE])->load() < .5f) {
+    for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
+      std::memset(channelPtrs[channel], 0, sizeof(float) * numSamps);
+    }
+  }
 }
-
-void jkClassPlugAudioProcessor::setFMRatio() { mVoices.setRatio(*mFMRatio); }
-
-void jkClassPlugAudioProcessor::setFMAmt() { mVoices.setAmt(*mFMAmt); }
 
 //==============================================================================
 bool jkClassPlugAudioProcessor::hasEditor() const
