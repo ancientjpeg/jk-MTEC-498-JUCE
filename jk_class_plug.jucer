@@ -16,6 +16,9 @@
           <FILE id="EjR8vq" name="FMVoice.h" compile="0" resource="0" file="Source/DSP/Generators/FMVoice.h"/>
           <FILE id="SvNhGo" name="FMVoiceManager.cpp" compile="1" resource="0"
                 file="Source/DSP/Generators/FMVoiceManager.cpp"/>
+          <FILE id="J2J4O6" name="WaveTableOsc.cpp" compile="1" resource="0"
+                file="Source/DSP/Generators/WaveTableOsc.cpp"/>
+          <FILE id="Oil7eU" name="WaveTableOsc.h" compile="0" resource="0" file="Source/DSP/Generators/WaveTableOsc.h"/>
         </GROUP>
       </GROUP>
       <GROUP id="{5090DC99-C550-7E43-0B64-07CECED8FE82}" name="Management"/>
@@ -32,9 +35,6 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="EC5VOO" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="f6mPzp" name="WaveTableOsc.cpp" compile="1" resource="0"
-            file="Source/WaveTableOsc.cpp"/>
-      <FILE id="WXkGeH" name="WaveTableOsc.h" compile="0" resource="0" file="Source/WaveTableOsc.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

@@ -8,7 +8,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "WaveTableOsc.h"
 
 //==============================================================================
 jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()

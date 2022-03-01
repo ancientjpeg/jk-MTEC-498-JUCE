@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "FMVoice.h"
+#include "DSP/Generators/FMVoice.h"
 #include "ParamDefines.h"
-#include "SingleDelay.h"
+#include "DSP/Delays/SingleDelay.h"
 #include <JuceHeader.h>
 
 //==============================================================================
