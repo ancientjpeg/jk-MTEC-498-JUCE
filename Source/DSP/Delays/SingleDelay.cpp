@@ -51,13 +51,14 @@ void SingleDelay::processSample(float *const thisSample)
   mBuffer[mWriteHead++] = *thisSample + mFeedback * mOutputPrev;
   mWriteHead            = mWriteHead >= mMaxSamples ? 0 : mWriteHead;
 
-  float mod             = (float)mWriteHead - mDelaySamples.getNextValue();
-  if (mod < 0.f)
-    mod += (float)mMaxSamples;
-  int x0 = std::floor(mod);
+  float readPos         = (float)mWriteHead - mDelaySamples.getNextValue();
+  if (readPos < 0.f)
+    readPos += (float)mMaxSamples;
+
+  int x0 = (int)readPos;
   int x1 = x0 + 1;
   x1     = x1 > mMaxSamples ? x1 - mMaxSamples : x1;
-  mod -= (float)x0;
+  float mod = readPos - (float)x0;
 
   float y0    = mBuffer[x0];
   float y1    = mBuffer[x1];
