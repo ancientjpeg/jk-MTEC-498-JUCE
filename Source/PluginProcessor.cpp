@@ -108,6 +108,8 @@ void jkClassPlugAudioProcessor::prepareToPlay(double sampleRate,
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   mTwoPiSampleDeltaT = (1.f / sampleRate) * 2.f * M_PI;
+  if (!mDelay.isPrepared)
+    mDelay.prepare(.2f, .1f, .5f, 5.f, sampleRate);
 }
 
 void jkClassPlugAudioProcessor::releaseResources() {}
@@ -147,7 +149,7 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   juce::ScopedNoDenormals noDenormals;
   auto                    totalNumOutputChannels = getTotalNumOutputChannels();
 
-  auto                    channelPtrs = buffer.getArrayOfWritePointers();
+  float**                 channelPtrs = buffer.getArrayOfWritePointers();
   int                     numSamps    = buffer.getNumSamples();
   mMidiState.processNextMidiBuffer(midiMessages, 0, numSamps, false);
   for (int i = 0; i < numSamps; i++) {
@@ -156,17 +158,13 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
       channelPtrs[channel][i] = *mMute > 0.5f ? 0.f : valueCalc * *mGain;
     }
   }
+  mDelay.processBlock(channelPtrs[0], numSamps);
+  
 }
 
-void jkClassPlugAudioProcessor::setFMRatio()
-{ 
-  mVoices.setRatio(*mFMRatio);
-}
+void jkClassPlugAudioProcessor::setFMRatio() { mVoices.setRatio(*mFMRatio); }
 
-void jkClassPlugAudioProcessor::setFMAmt()
-{
-  mVoices.setAmt(*mFMAmt);
-}
+void jkClassPlugAudioProcessor::setFMAmt() { mVoices.setAmt(*mFMAmt); }
 
 //==============================================================================
 bool jkClassPlugAudioProcessor::hasEditor() const

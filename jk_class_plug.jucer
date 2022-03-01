@@ -6,6 +6,8 @@
               pluginAUMainType="'augn'" cppLanguageStandard="20" pluginManufacturer="ancientjpeg">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
+      <FILE id="dzaonk" name="SingleDelay.cpp" compile="1" resource="0" file="Source/SingleDelay.cpp"/>
+      <FILE id="XY1Iud" name="SingleDelay.h" compile="0" resource="0" file="Source/SingleDelay.h"/>
       <FILE id="LeYnxm" name="WaveTableOsc.cpp" compile="1" resource="0"
             file="Source/WaveTableOsc.cpp"/>
       <FILE id="V35J8F" name="WaveTableOsc.h" compile="0" resource="0" file="Source/WaveTableOsc.h"/>
