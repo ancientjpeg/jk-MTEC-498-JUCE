@@ -108,7 +108,7 @@ void jkClassPlugAudioProcessor::prepareToPlay(double sampleRate,
   // initialisation that you need..
   mTwoPiSampleDeltaT = (1.f / sampleRate) * 2.f * M_PI;
   if (!mDelay.isPrepared)
-    mDelay.prepare(.2f, .1f, .5f, 5.f, sampleRate);
+    mDelay.prepare(.2f, .1f, .5f, 5.f, sampleRate, 2);
 }
 
 void jkClassPlugAudioProcessor::releaseResources() {}
@@ -157,7 +157,7 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
       channelPtrs[channel][i] = *mMute > 0.5f ? 0.f : valueCalc * *mGain;
     }
   }
-  mDelay.processBlock(channelPtrs[0], numSamps);
+  mDelay.processBlocks(channelPtrs, 2, numSamps);
   
 }
 

@@ -7,9 +7,10 @@
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
       <GROUP id="{B8348CAA-1A64-1ED5-8BD5-7E6F43ABEBDF}" name="DSP">
-        <GROUP id="{F38EE2D5-EE2E-2CB6-569C-5C7BBDE05135}" name="Delays">
-          <FILE id="DuBq95" name="SingleDelay.cpp" compile="1" resource="0" file="Source/DSP/Delays/SingleDelay.cpp"/>
-          <FILE id="D8VQFs" name="SingleDelay.h" compile="0" resource="0" file="Source/DSP/Delays/SingleDelay.h"/>
+        <GROUP id="{E52F9207-5076-8096-504A-34EB3F9642B1}" name="Delays">
+          <FILE id="baBEiO" name="SimpleMCDelay.cpp" compile="1" resource="0"
+                file="Source/DSP/Delays/SimpleMCDelay.cpp"/>
+          <FILE id="cWpYnh" name="SimpleMCDelay.h" compile="0" resource="0" file="Source/DSP/Delays/SimpleMCDelay.h"/>
         </GROUP>
         <GROUP id="{1D011331-F497-7154-4262-C369E74D7A8F}" name="Generators">
           <FILE id="ui6N93" name="FMVoice.cpp" compile="1" resource="0" file="Source/DSP/Generators/FMVoice.cpp"/>
@@ -41,7 +42,7 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="jkClassPlug" vst3BinaryLocation="/Library/Audio/Plug-Ins/VST3"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="jkClassPlug" auBinaryLocation="/Library/Audio/Plug-Ins/Components"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="jkClassPlug"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
