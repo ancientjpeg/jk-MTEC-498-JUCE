@@ -25,10 +25,13 @@ SimpleMCDelay::~SimpleMCDelay()
 void SimpleMCDelay::prepare(float delaySeconds, float feedback, float mix,
                             float maxSeconds, float sampleRate, int numChans)
 {
+  float smoothingTime = 2.f;
   mSampleRate = sampleRate;
+  mDelaySamples.reset(mSampleRate, smoothingTime);
+  mFeedBack.reset(mSampleRate, smoothingTime);
+  setParams(delaySeconds, feedback, mix);
   mDelaySamples.setCurrentAndTargetValue(delaySeconds * mSampleRate);
   mFeedBack.setCurrentAndTargetValue(feedback);
-  setParams(delaySeconds, feedback, mix);
   mMaxSamples = std::ceil(maxSeconds * mSampleRate);
   mBuffers    = new float[mMaxSamples * numChans];
   mWriteHeads = new int[numChans];
@@ -45,9 +48,13 @@ void SimpleMCDelay::setParams(float delaySeconds, float feedback, float mix)
 
 void SimpleMCDelay::processBlocks(float **blocks, int numChans, int numSamples)
 {
-  for (int chan = 0; chan < numChans; chan++) {
-    float *thisBuf = mBuffers + chan * mMaxSamples;
-    for (int i = 0; i < numSamples; i++) {
+  for (int i = 0; i < numSamples; i++) {
+    for (int chan = 0; chan < numChans; chan++) {
+      if (chan == 0){
+        m_samp_feedback = mFeedBack.getNextValue();
+        m_samp_del_samps = mDelaySamples.getNextValue();
+      }
+      float *thisBuf = mBuffers + chan * mMaxSamples;
       processSample(blocks[chan] + i, thisBuf, mWriteHeads[chan]);
     }
   }
@@ -66,17 +73,17 @@ float sigmoid_n1_1(float input)
 void SimpleMCDelay::processSample(float *const thisSample, float *buffer,
                                   int &writeHead)
 {
-  float rawWrite      = *thisSample + mFeedBack.getNextValue() * mOutputPrev;
+  float rawWrite      = *thisSample + m_samp_feedback * mOutputPrev;
   buffer[writeHead++] = std::tanh(rawWrite);
   writeHead           = writeHead >= mMaxSamples ? 0 : writeHead;
 
-  float readPos       = (float)writeHead - mDelaySamples.getNextValue();
+  float readPos       = (float)writeHead - m_samp_del_samps;
   if (readPos < 0.f)
     readPos += (float)mMaxSamples;
 
   int x0      = (int)readPos;
   int x1      = x0 + 1;
-  x1          = x1 > mMaxSamples ? x1 - mMaxSamples : x1;
+  x1          = x1 < mMaxSamples ? x1 : x1 - mMaxSamples ;
   float mod   = readPos - (float)x0;
 
   float y0    = buffer[x0];

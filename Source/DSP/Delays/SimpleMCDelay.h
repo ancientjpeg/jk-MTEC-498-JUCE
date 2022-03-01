@@ -13,7 +13,7 @@
 
 class SimpleMCDelay {
   int                              mMaxSamples, *mWriteHeads;
-  float                            mMix, mMixInv, mSampleRate, mOutputPrev;
+  float                            mMix, mMixInv, mSampleRate, mOutputPrev, m_samp_del_samps, m_samp_feedback;
   juce::LinearSmoothedValue<float> mDelaySamples, mFeedBack;
   float                           *mBuffers;
   bool                             prepared;

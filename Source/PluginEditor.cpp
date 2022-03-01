@@ -30,6 +30,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
   addAndMakeVisible(FMFreqSlider);
   addAndMakeVisible(FMAmtSlider);
 
+  mDelayTimeSlider.setSkewFactorFromMidPoint(1.f);
   addAndMakeVisible(mDelayTimeSlider);
   addAndMakeVisible(mDelayFBSlider);
   addAndMakeVisible(mDelayMixSlider);
