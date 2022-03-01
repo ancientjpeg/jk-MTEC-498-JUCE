@@ -8,10 +8,11 @@
 
 #pragma once
 
+#include "DSP/Delays/SimpleMCDelay.h"
 #include "DSP/Generators/FMVoice.h"
 #include "ParamDefines.h"
-#include "DSP/Delays/SingleDelay.h"
 #include <JuceHeader.h>
+
 
 //==============================================================================
 /**
@@ -69,6 +70,6 @@ private:
   juce::MidiKeyboardState mMidiState;
   FMVoiceManager          mVoices;
   float                   mTwoPiSampleDeltaT;
-  SingleDelay             mDelay;
+  SimpleMCDelay           mDelay;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessor)
 };
