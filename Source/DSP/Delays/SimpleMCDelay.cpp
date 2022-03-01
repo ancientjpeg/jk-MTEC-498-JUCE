@@ -27,7 +27,7 @@ void SimpleMCDelay::prepare(float delaySeconds, float feedback, float mix,
 {
   mSampleRate = sampleRate;
   mDelaySamples.setCurrentAndTargetValue(delaySeconds * mSampleRate);
-  mFeedback.setCurrentAndTargetValue(feedback);
+  mFeedBack.setCurrentAndTargetValue(feedback);
   setParams(delaySeconds, feedback, mix);
   mMaxSamples = std::ceil(maxSeconds * mSampleRate);
   mBuffers    = new float[mMaxSamples * numChans];
@@ -40,7 +40,7 @@ void SimpleMCDelay::setParams(float delaySeconds, float feedback, float mix)
   mMix    = mix;
   mMixInv = 1.f - mMix;
   mDelaySamples.setTargetValue(delaySeconds * mSampleRate);
-  mFeedback.setTargetValue(feedback);
+  mFeedBack.setTargetValue(feedback);
 }
 
 void SimpleMCDelay::processBlocks(float **blocks, int numChans, int numSamples)
@@ -59,13 +59,15 @@ float sigmoid_n1_1(float input)
   // 2/(1-e^-x) - (1-e^-x)/(1-e^-x) == 1+e^-x/1-e^-x
   float expnt = std::exp(-input);
   return (1.f + expnt) / (1.f - expnt);
+  
+  // OKAY I COULD BE WRONG
 }
 
 void SimpleMCDelay::processSample(float *const thisSample, float *buffer,
                                   int &writeHead)
 {
-  float rawWrite      = *thisSample + mFeedback * mOutputPrev;
-  buffer[writeHead++] = sigmoid_n1_1(rawWrite);
+  float rawWrite      = *thisSample + mFeedBack.getNextValue() * mOutputPrev;
+  buffer[writeHead++] = std::tanh(rawWrite);
   writeHead           = writeHead >= mMaxSamples ? 0 : writeHead;
 
   float readPos       = (float)writeHead - mDelaySamples.getNextValue();
@@ -80,6 +82,7 @@ void SimpleMCDelay::processSample(float *const thisSample, float *buffer,
   float y0    = buffer[x0];
   float y1    = buffer[x1];
 
-  mOutputPrev = (y1 - y0) * mod + y0;
+  float outputLerp = (y1 - y0) * mod + y0;
+  mOutputPrev = *thisSample * mMixInv + outputLerp * mMix;
   *thisSample = mOutputPrev;
 }

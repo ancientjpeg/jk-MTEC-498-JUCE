@@ -9,8 +9,9 @@
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
       <GROUP id="{81F9E849-0563-DA0E-0AED-2A55F585D997}" name="Management">
         <GROUP id="{ECE4CE88-2534-7207-621D-CC9D866D68FA}" name="Parameters">
+          <FILE id="t1MxSF" name="ParamDefines.cpp" compile="1" resource="0"
+                file="Source/Management/Parameters/ParamDefines.cpp"/>
           <FILE id="eWkJnt" name="ParamDefines.h" compile="0" resource="0" file="Source/Management/Parameters/ParamDefines.h"/>
-          <FILE id="mXyXaQ" name="ParamManager.h" compile="0" resource="0" file="Source/Management/Parameters/ParamManager.h"/>
         </GROUP>
       </GROUP>
       <GROUP id="{B8348CAA-1A64-1ED5-8BD5-7E6F43ABEBDF}" name="DSP">

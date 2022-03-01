@@ -1,5 +1,5 @@
-#ifndef PARAM_DEFINES_H
-#define PARAM_DEFINES_H
+#ifndef JK_PARAM_DEFINES_H
+#define JK_PARAM_DEFINES_H
 
 #include <JuceHeader.h>
 
@@ -30,15 +30,9 @@ static const juce::Array<juce::NormalisableRange<float>> PARAM_RANGES{
     juce::NormalisableRange<float>(0.f, 1.f),
     juce::NormalisableRange<float>(0.f, 1.f, 1.f)};
 
-juce::AudioProcessorValueTreeState::ParameterLayout getLayout()
-{
-  using juce::String;
-  juce::AudioProcessorValueTreeState::ParameterLayout layout;
-  for (int i = 0; i < NUM_PARAMS; i++) {
-    layout.add(std::make_unique<juce::AudioParameterFloat>(
-        PARAM_NAMES[i], PARAM_NAMES[i], PARAM_RANGES[i], 0.f));
-  }
-  return layout;
-}
+static const juce::Array<float> PARAM_DEFAULTS{2.f, 1.f, .5f, 0.f,
+                                               0.f, 1.f, 0.f};
+
+juce::AudioProcessorValueTreeState::ParameterLayout getLayout();
 
 #endif

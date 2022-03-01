@@ -53,5 +53,4 @@ public:
                      int midiNoteNumber, float velocity) override;
   void  handleNoteOff(juce::MidiKeyboardState *source, int midiChannel,
                       int midiNoteNumber, float velocity) override;
-
 };

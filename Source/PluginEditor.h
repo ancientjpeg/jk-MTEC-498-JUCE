@@ -23,6 +23,7 @@ public:
 
   //==============================================================================
   void paint(juce::Graphics &) override;
+  void paintOverChildren(juce::Graphics &) override;
   void resized() override;
 
 private:
@@ -32,8 +33,8 @@ private:
   jkClassSliderBase FMFreqSlider, FMAmtSlider, gainSlider, mDelayTimeSlider,
       mDelayFBSlider, mDelayMixSlider;
   juce::TextButton                                     muteButton;
-  juce::AudioProcessorValueTreeState::SliderAttachment fmf, fma, gn, dt, dfb,
-      dm;
+  juce::AudioProcessorValueTreeState::SliderAttachment fmf, fma, dt, dfb, dm,
+      gn;
   juce::AudioProcessorValueTreeState::ButtonAttachment mb;
   jkStyle                                              baseStyle;
 

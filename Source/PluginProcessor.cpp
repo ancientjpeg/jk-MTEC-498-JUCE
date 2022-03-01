@@ -27,14 +27,11 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
       mUndoManager(30000, 200),
       mParamState(*this, &mUndoManager, juce::Identifier("jkClassPlug"),
                   getLayout()),
-      mFMAmt(mParamState.getRawParameterValue("FMAmt")),
-      mFMRatio(mParamState.getRawParameterValue("FMRatio")),
-      mGain(mParamState.getRawParameterValue("gain")),
-      mMute(mParamState.getRawParameterValue("mute")),
-      mVoices(8, *mFMRatio, *mFMAmt)
+      mVoices(
+          8,
+          mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_RATIO])->load(),
+          mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_AMT])->load())
 {
-  setFMRatio();
-  setFMAmt();
   mMidiState.addListener(&mVoices);
 }
 
@@ -107,8 +104,15 @@ void jkClassPlugAudioProcessor::prepareToPlay(double sampleRate,
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   mTwoPiSampleDeltaT = (1.f / sampleRate) * 2.f * M_PI;
-  if (!mDelay.isPrepared)
-    mDelay.prepare(.2f, .1f, .5f, 5.f, sampleRate, 2);
+
+  if (!mDelay.isPrepared) {
+    mDelay.prepare(
+        mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_TIME])->load(),
+        mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_FEEDBACK])
+            ->load(),
+        mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_MIX])->load(),
+        5.f, sampleRate, 2);
+  }
 }
 
 void jkClassPlugAudioProcessor::releaseResources() {}
@@ -169,13 +173,14 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   for (int i = 0; i < numSamps; i++) {
     float valueCalc = mVoices.cycle(mTwoPiSampleDeltaT);
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
-      channelPtrs[channel][i] = *mMute > 0.5f ? 0.f : valueCalc * *mGain;
+      channelPtrs[channel][i] = valueCalc * gain;
     }
   }
   mDelay.processBlocks(channelPtrs, 2, numSamps);
-
+//
   /* check mute */
-  if (mParamState.getRawParameterValue(PARAM_NAMES[PARAM_MUTE])->load() < .5f) {
+  float mute = mParamState.getRawParameterValue(PARAM_NAMES[PARAM_MUTE])->load();
+  if (mute > .5f) {
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       std::memset(channelPtrs[channel], 0, sizeof(float) * numSamps);
     }

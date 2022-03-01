@@ -10,7 +10,8 @@
 
 #include "FMVoice.h"
 
-FMVoiceManager::FMVoiceManager(int maxVoices, float ratio_init, float amt_init) : m_ratio(ratio_init), m_amt(amt_init)
+FMVoiceManager::FMVoiceManager(int maxVoices, float ratio_init, float amt_init)
+    : m_ratio(ratio_init), m_amt(amt_init)
 {
   voices_internal = new FMVoice[maxVoices];
   for (int i = 0; i < maxVoices; i++) {

@@ -20,10 +20,11 @@ public:
   jkStyle()
   {
     using juce::LookAndFeel_V4;
-    ColourScheme scheme(
-        juce::Colours::white, juce::Colours::white, juce::Colours::white,
-        juce::Colours::black, juce::Colours::black, juce::Colours::black,
-        juce::Colours::yellow, juce::Colours::red, juce::Colours::black);
+    ColourScheme scheme(juce::Colours::white, juce::Colours::white,
+                        juce::Colours::white, juce::Colours::black,
+                        juce::Colours::black, juce::Colours::black,
+                        juce::Colours::yellow, juce::Colour(36, 255, 197),
+                        juce::Colours::black);
     setColourScheme(scheme);
   }
 
