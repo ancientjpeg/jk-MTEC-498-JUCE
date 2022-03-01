@@ -52,10 +52,19 @@ void SimpleMCDelay::processBlocks(float **blocks, int numChans, int numSamples)
   }
 }
 
+float sigmoid_n1_1(float input)
+{
+  // sigmoid * 2.f - 1.f results in:
+  // 2/(1-e^-x) - (1-e^-x)/(1-e^-x) == 1+e^-x/1-e^-x
+  float expnt = std::exp(-input);
+  return (1.f + expnt) / (1.f - expnt);
+}
+
 void SimpleMCDelay::processSample(float *const thisSample, float *buffer,
                                   int &writeHead)
 {
-  buffer[writeHead++] = *thisSample + mFeedback * mOutputPrev;
+  float rawWrite      = *thisSample + mFeedback * mOutputPrev;
+  buffer[writeHead++] = sigmoid_n1_1(rawWrite);
   writeHead           = writeHead >= mMaxSamples ? 0 : writeHead;
 
   float readPos       = (float)writeHead - mDelaySamples.getNextValue();

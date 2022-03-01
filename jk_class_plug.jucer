@@ -3,9 +3,17 @@
 <JUCERPROJECT id="xsxwR7" name="jkClassPlug" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              pluginAUMainType="'augn'" cppLanguageStandard="20" pluginManufacturer="ancientjpeg">
+              pluginAUMainType="'augn'" cppLanguageStandard="20" pluginManufacturer="ancientjpeg"
+              version="0.1.0">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
+      <GROUP id="{81F9E849-0563-DA0E-0AED-2A55F585D997}" name="Management">
+        <GROUP id="{ECE4CE88-2534-7207-621D-CC9D866D68FA}" name="Parameters">
+          <FILE id="DPSTdz" name="ParamDefines.cpp" compile="1" resource="0"
+                file="Source/Management/Parameters/ParamDefines.cpp"/>
+          <FILE id="eWkJnt" name="ParamDefines.h" compile="0" resource="0" file="Source/Management/Parameters/ParamDefines.h"/>
+        </GROUP>
+      </GROUP>
       <GROUP id="{B8348CAA-1A64-1ED5-8BD5-7E6F43ABEBDF}" name="DSP">
         <GROUP id="{E52F9207-5076-8096-504A-34EB3F9642B1}" name="Delays">
           <FILE id="baBEiO" name="SimpleMCDelay.cpp" compile="1" resource="0"
@@ -22,13 +30,9 @@
           <FILE id="Oil7eU" name="WaveTableOsc.h" compile="0" resource="0" file="Source/DSP/Generators/WaveTableOsc.h"/>
         </GROUP>
       </GROUP>
-      <GROUP id="{5090DC99-C550-7E43-0B64-07CECED8FE82}" name="Management"/>
       <FILE id="uWpiAO" name="jkClassSliderBase.h" compile="0" resource="0"
             file="Source/jkClassSliderBase.h"/>
       <FILE id="p0E8wJ" name="jkStyle.h" compile="0" resource="0" file="Source/jkStyle.h"/>
-      <FILE id="wZ0wqA" name="ParamDefines.cpp" compile="1" resource="0"
-            file="Source/ParamDefines.cpp"/>
-      <FILE id="dAjnCq" name="ParamDefines.h" compile="0" resource="0" file="Source/ParamDefines.h"/>
       <FILE id="kfwsZA" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="w6KoDa" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
