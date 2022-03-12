@@ -1,0 +1,3 @@
+#ifndef JK_PRESET_MANAGER_H
+#define JK_PRESET_MANAGER_H
+#endif

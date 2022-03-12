@@ -1,0 +1,3 @@
+#ifndef JK_PROPERTY_MANAGER_H
+#define JK_PROPERTY_MANAGER_H
+#endif

@@ -1,0 +1,3 @@
+#ifndef JK_PLUGIN_INTERFACE_H
+#define JK_PLUGIN_INTERFACE_H
+#endif
