@@ -28,7 +28,7 @@ jkClassPlugAudioProcessorEditor::jkClassPlugAudioProcessorEditor(
 
   mSliders[PARAM_FM_RATIO]->setSkewFactorFromMidPoint(1.f);
 
-  mSliders[PARAM_DELAY_TIME]->setSkewFactorFromMidPoint(1.f);
+  mSliders[PARAM_DELAY_TIME]->setSkewFactorFromMidPoint(0.5f);
 
   /* MAKE BUTTON DEFINES !!! */
   mMuteButton.reset(new juce::TextButton());
