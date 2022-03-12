@@ -7,58 +7,58 @@
 
 #include "FolderManager.h"
 
-FolderManager::FolderManager()
-{
+FolderManager::FolderManager() {}
 
+FolderManager::~FolderManager() {}
+
+juce::File FolderManager::getRootFolder()
+{
+  auto       osType = juce::SystemStats::getOperatingSystemType();
+  juce::File folder;
+
+  if ((osType & juce::SystemStats::MacOSX) != 0) {
+
+    folder = juce::File("/Library/Application Support/MTEC_PLUGS/");
+  }
+  else if ((osType & juce::SystemStats::Windows) != 0) {
+
+    folder = juce::File::getSpecialLocation(
+                 juce::File::commonApplicationDataDirectory)
+                 .getChildFile("MTEC_PLUGS");
+  }
+
+  folder.getParentDirectory().setReadOnly(false);
+
+  if (!folder.exists()) {
+    DBG("Created Root Folder " + folder.createDirectory().getErrorMessage());
+  }
+
+  return folder;
 }
 
-FolderManager::~FolderManager()
+juce::File FolderManager::getAppFolder()
 {
-    
+#ifndef JucePlugin_Name
+#define JucePlugin_Name "Intellisense go Away"
+#endif
+  juce::File productAppFolder = getRootFolder().getChildFile(JucePlugin_Name);
+
+  if (!productAppFolder.exists()) {
+    DBG("Created Product Folder "
+        + productAppFolder.createDirectory().getErrorMessage());
+  }
+
+  return productAppFolder;
 }
 
-File FolderManager::getRootFolder()
+juce::File FolderManager::getPresetsFolder()
 {
-    auto osType = SystemStats::getOperatingSystemType();
-    File folder;
-    
-    if ((osType & SystemStats::MacOSX) != 0) {
-        
-        folder = File("/Library/Application Support/MTEC_PLUGS/");
-        
-    } else if ((osType & SystemStats::Windows) != 0) {
-        
-        folder = File::getSpecialLocation(File::commonApplicationDataDirectory).getChildFile("MTEC_PLUGS");
-        
-    }
-    
-    folder.getParentDirectory().setReadOnly(false);
-    
-    if (!folder.exists()) {
-        DBG("Created Root Folder " + folder.createDirectory().getErrorMessage());
-    }
-    
-    return folder;
-}
+  juce::File presetsFolder = getAppFolder().getChildFile("Presets");
 
-File FolderManager::getAppFolder()
-{
-    File productAppFolder = getRootFolder().getChildFile(JucePlugin_Name);
-    
-    if (!productAppFolder.exists()) {
-        DBG("Created Product Folder " + productAppFolder.createDirectory().getErrorMessage());
-    }
-    
-    return productAppFolder;
-}
+  if (!presetsFolder.exists()) {
+    DBG("Created Preset Folder "
+        + presetsFolder.createDirectory().getErrorMessage());
+  }
 
-File FolderManager::getPresetsFolder()
-{
-    File presetsFolder = getAppFolder().getChildFile("Presets");
-    
-    if (!presetsFolder.exists()) {
-        DBG("Created Preset Folder " + presetsFolder.createDirectory().getErrorMessage());
-    }
-    
-    return presetsFolder;
+  return presetsFolder;
 }

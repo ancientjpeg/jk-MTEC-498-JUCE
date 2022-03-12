@@ -15,7 +15,7 @@ ParamManager::ParamManager(ProcessorInterface *interface)
 {
   mParamState.reset(new juce::AudioProcessorValueTreeState(
       *mInterface->getAudioProcessor(), &mUndoManager, "PARAMETER_STATE",
-      getLayout()));
+      generateLayout()));
 }
 
 juce::AudioProcessorValueTreeState *ParamManager::getValueTree()
@@ -43,4 +43,9 @@ juce::RangedAudioParameter *
 ParamManager::getParam(jkClassFloatPluginParams parameterID)
 {
   return mParamState->getParameter(PARAM_NAMES[parameterID]);
+}
+
+void ParamManager::setParam(jkClassFloatPluginParams parameterID, float val)
+{
+  *mParamState->getRawParameterValue(PARAM_NAMES[parameterID]) = val;
 }

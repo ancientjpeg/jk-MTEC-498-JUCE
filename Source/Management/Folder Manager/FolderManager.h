@@ -12,24 +12,22 @@
 
 class FolderManager {
 public:
-    
-    /* constructor */
-    FolderManager();
-    
-    /* destructor */
-    ~FolderManager();
-    
-    /* returns the company root folder
-        THIS FOLDER MUST BE CREATED MANUALLY OR VIA INSTALLER
-     */
-    static File getRootFolder();
-    
-    /* returns the folder for the current app */
-    static File getAppFolder();
-    
-    /* returns the preset folder for the current app */
-    static File getPresetsFolder();
-    
+  /* constructor */
+  FolderManager();
+
+  /* destructor */
+  ~FolderManager();
+
+  /* returns the company root folder
+      THIS FOLDER MUST BE CREATED MANUALLY OR VIA INSTALLER
+   */
+  static juce::File getRootFolder();
+
+  /* returns the folder for the current app */
+  static juce::File getAppFolder();
+
+  /* returns the preset folder for the current app */
+  static juce::File getPresetsFolder();
 };
 
 #endif /* MKUFolderManager_hpp */

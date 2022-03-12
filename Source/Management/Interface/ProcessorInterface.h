@@ -5,17 +5,20 @@
 
 class ParamManager;
 class PresetManager;
+class PropertyManager;
 
 class ProcessorInterface {
 
 public:
   virtual ~ProcessorInterface(){};
 
-  virtual ParamManager         *getParamManager()   = 0;
+  virtual ParamManager         *getParamManager()    = 0;
 
-  virtual PresetManager        *getPresetManager()  = 0;
+  virtual PresetManager        *getPresetManager()   = 0;
 
-  virtual juce::AudioProcessor *getAudioProcessor() = 0;
+  virtual PropertyManager      *getPropertyManager() = 0;
+
+  virtual juce::AudioProcessor *getAudioProcessor()  = 0;
 };
 
 #endif

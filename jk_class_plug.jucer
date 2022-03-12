@@ -4,57 +4,62 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               pluginAUMainType="'augn'" cppLanguageStandard="20" pluginManufacturer="ancientjpeg"
-              version="0.1.0">
+              version="0.1.0" headerPath="Source/**">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
-      <GROUP id="{B8348CAA-1A64-1ED5-8BD5-7E6F43ABEBDF}" name="DSP">
-        <GROUP id="{E52F9207-5076-8096-504A-34EB3F9642B1}" name="Delays">
-          <FILE id="baBEiO" name="SimpleMCDelay.cpp" compile="1" resource="0"
+      <GROUP id="{945BFC07-FC9A-55C7-6F11-CF9D69FB7696}" name="DSP">
+        <GROUP id="{6D40FF60-F8C6-67A6-9CD1-7DDAC5CD33D2}" name="Delays">
+          <FILE id="q9LTgi" name="SimpleMCDelay.cpp" compile="1" resource="0"
                 file="Source/DSP/Delays/SimpleMCDelay.cpp"/>
-          <FILE id="cWpYnh" name="SimpleMCDelay.h" compile="0" resource="0" file="Source/DSP/Delays/SimpleMCDelay.h"/>
+          <FILE id="o6z0L2" name="SimpleMCDelay.h" compile="0" resource="0" file="Source/DSP/Delays/SimpleMCDelay.h"/>
         </GROUP>
-        <GROUP id="{1D011331-F497-7154-4262-C369E74D7A8F}" name="Generators">
-          <FILE id="ui6N93" name="FMVoice.cpp" compile="1" resource="0" file="Source/DSP/Generators/FMVoice.cpp"/>
-          <FILE id="EjR8vq" name="FMVoice.h" compile="0" resource="0" file="Source/DSP/Generators/FMVoice.h"/>
-          <FILE id="SvNhGo" name="FMVoiceManager.cpp" compile="1" resource="0"
+        <GROUP id="{9A975021-C7A2-5531-4548-50661546AC76}" name="Generators">
+          <FILE id="IzkNW6" name="FMVoice.cpp" compile="1" resource="0" file="Source/DSP/Generators/FMVoice.cpp"/>
+          <FILE id="Y6xgoc" name="FMVoice.h" compile="0" resource="0" file="Source/DSP/Generators/FMVoice.h"/>
+          <FILE id="rpZHqK" name="FMVoiceManager.cpp" compile="1" resource="0"
                 file="Source/DSP/Generators/FMVoiceManager.cpp"/>
-          <FILE id="J2J4O6" name="WaveTableOsc.cpp" compile="1" resource="0"
+          <FILE id="jilDEN" name="WaveTableOsc.cpp" compile="1" resource="0"
                 file="Source/DSP/Generators/WaveTableOsc.cpp"/>
-          <FILE id="Oil7eU" name="WaveTableOsc.h" compile="0" resource="0" file="Source/DSP/Generators/WaveTableOsc.h"/>
+          <FILE id="vH8RbC" name="WaveTableOsc.h" compile="0" resource="0" file="Source/DSP/Generators/WaveTableOsc.h"/>
         </GROUP>
       </GROUP>
-      <GROUP id="{BA22F860-3C01-1B54-AB97-486F0276072A}" name="Management">
-        <GROUP id="{63C6F4F8-D047-CACD-E45F-7F217D521ED9}" name="Interface">
-          <FILE id="Kn3gVt" name="PluginInterface.h" compile="0" resource="0"
-                file="Source/Management/Interface/PluginInterface.h"/>
+      <GROUP id="{2D99DB33-955C-E07F-53F0-F6AEAA57F497}" name="Management">
+        <GROUP id="{1433B535-F151-2B1C-E60C-060D88DF609A}" name="Folder Manager">
+          <FILE id="cCVYkf" name="FolderManager.cpp" compile="1" resource="0"
+                file="Source/Management/Folder Manager/FolderManager.cpp"/>
+          <FILE id="NMjJbr" name="FolderManager.h" compile="0" resource="0" file="Source/Management/Folder Manager/FolderManager.h"/>
         </GROUP>
-        <GROUP id="{835A7CCB-B878-7655-4296-82A8E29D8913}" name="Parameters">
-          <FILE id="kCvdsc" name="ParamDefines.h" compile="0" resource="0" file="Source/Management/Parameters/ParamDefines.h"/>
-          <FILE id="afLV35" name="ParamManager.cpp" compile="1" resource="0"
+        <GROUP id="{D7636079-1356-3B32-6891-A4FEAF7352C4}" name="Interface">
+          <FILE id="sMoB4y" name="ProcessorInterface.h" compile="0" resource="0"
+                file="Source/Management/Interface/ProcessorInterface.h"/>
+        </GROUP>
+        <GROUP id="{10ABEC55-905A-3C1A-A3BF-121DE8190828}" name="Parameters">
+          <FILE id="jeubQJ" name="ParamDefines.h" compile="0" resource="0" file="Source/Management/Parameters/ParamDefines.h"/>
+          <FILE id="cqvjWr" name="ParamManager.cpp" compile="1" resource="0"
                 file="Source/Management/Parameters/ParamManager.cpp"/>
-          <FILE id="wuH3g7" name="ParamManager.h" compile="0" resource="0" file="Source/Management/Parameters/ParamManager.h"/>
+          <FILE id="B3hn4h" name="ParamManager.h" compile="0" resource="0" file="Source/Management/Parameters/ParamManager.h"/>
         </GROUP>
-        <GROUP id="{2CED08A7-41F3-8383-9417-A87BE590B88C}" name="Presets">
-          <FILE id="bfQlSK" name="PresetManager.cpp" compile="1" resource="0"
+        <GROUP id="{68A2818C-FAF9-3D72-DCBF-9B77CDCCFAAA}" name="Presets">
+          <FILE id="xOs467" name="PresetManager.cpp" compile="1" resource="0"
                 file="Source/Management/Presets/PresetManager.cpp"/>
-          <FILE id="ToRXX0" name="PresetManager.h" compile="0" resource="0" file="Source/Management/Presets/PresetManager.h"/>
+          <FILE id="HonWGu" name="PresetManager.h" compile="0" resource="0" file="Source/Management/Presets/PresetManager.h"/>
         </GROUP>
-        <GROUP id="{61DD2EE7-8465-B66B-473E-39019ED29E20}" name="Properties">
-          <FILE id="PXus9N" name="PropertyManager.cpp" compile="1" resource="0"
+        <GROUP id="{C8C52C0B-7959-A8F5-B8F2-89B19A5DF81A}" name="Properties">
+          <FILE id="diTgNg" name="PropertyManager.cpp" compile="1" resource="0"
                 file="Source/Management/Properties/PropertyManager.cpp"/>
-          <FILE id="hDhjB2" name="PropertyManager.h" compile="0" resource="0"
+          <FILE id="KL8nnf" name="PropertyManager.h" compile="0" resource="0"
                 file="Source/Management/Properties/PropertyManager.h"/>
         </GROUP>
       </GROUP>
-      <FILE id="uWpiAO" name="jkClassSliderBase.h" compile="0" resource="0"
+      <FILE id="OezFG8" name="jkClassSliderBase.h" compile="0" resource="0"
             file="Source/jkClassSliderBase.h"/>
-      <FILE id="p0E8wJ" name="jkStyle.h" compile="0" resource="0" file="Source/jkStyle.h"/>
-      <FILE id="kfwsZA" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="oOndEG" name="jkStyle.h" compile="0" resource="0" file="Source/jkStyle.h"/>
+      <FILE id="m5Q57Z" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="w6KoDa" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="Byr1xL" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="JsPIN2" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="cO99aG" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="EC5VOO" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="ibHBKd" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
     </GROUP>
   </MAINGROUP>

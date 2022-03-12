@@ -33,6 +33,4 @@ static const juce::Array<juce::NormalisableRange<float>> PARAM_RANGES{
 static const juce::Array<float> PARAM_DEFAULTS{2.f, 1.f, .5f, 0.f,
                                                0.f, 1.f, 0.f};
 
-juce::AudioProcessorValueTreeState::ParameterLayout getLayout();
-
 #endif

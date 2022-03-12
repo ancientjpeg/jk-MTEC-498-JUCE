@@ -2,7 +2,8 @@
 #define JK_PARAM_MANAGER_H
 
 #include "ParamDefines.h"
-#include "ProcessorInterface.h"
+#include "../Interface/ProcessorInterface.h"
+
 
 class ParamManager {
 
@@ -15,8 +16,9 @@ class ParamManager {
 public:
   ParamManager(ProcessorInterface *interface);
   juce::AudioProcessorValueTreeState *getValueTree();
-  float ParamManager::getParamValue(jkClassFloatPluginParams parameterID);
+  float getParamValue(jkClassFloatPluginParams parameterID);
   juce::RangedAudioParameter *getParam(jkClassFloatPluginParams parameterID);
+  void setParam(jkClassFloatPluginParams parameterID, float val);
 };
 
 #endif

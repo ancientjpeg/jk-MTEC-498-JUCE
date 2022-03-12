@@ -24,11 +24,9 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
 #else
     :
 #endif
-      mParamManager(this), mPresetManager(this),
-      mVoices(
-          8,
-          getParamManager()->getParamValue(PARAM_FM_RATIO),
-          getParamManager()->getParamValue(PARAM_FM_AMT)
+      mParamManager(this), mPresetManager(this), mPropertyManager(this),
+      mVoices(8, getParamManager()->getParamValue(PARAM_FM_RATIO),
+              getParamManager()->getParamValue(PARAM_FM_AMT))
 {
   mMidiState.addListener(&mVoices);
 }
@@ -71,8 +69,7 @@ bool jkClassPlugAudioProcessor::isMidiEffect() const
 #endif
 }
 
-double jkClassPlugAudioProcessor::getTailLengthSeconds() const {
-  return 0.0; }
+double jkClassPlugAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
 int    jkClassPlugAudioProcessor::getNumPrograms()
 {
@@ -82,8 +79,7 @@ int    jkClassPlugAudioProcessor::getNumPrograms()
             // programs.
 }
 
-int                jkClassPlugAudioProcessor::getCurrentProgram() {
-  return 0; }
+int                jkClassPlugAudioProcessor::getCurrentProgram() { return 0; }
 
 void               jkClassPlugAudioProcessor::setCurrentProgram(int index) {}
 
@@ -154,11 +150,9 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   /* check params */
   mVoices.setRatio(getParamManager()->getParamValue(PARAM_FM_RATIO));
   mVoices.setAmt(getParamManager()->getParamValue(PARAM_FM_AMT));
-  mDelay.setParams(
-      getParamManager()->getParamValue(PARAM_DELAY_TIM]),
-      getParamManager()->getParamValue(PARAM_DELAY_FEEDBACK])
-          ->load(),
-      getParamManager()->getParamValue(PARAM_DELAY_MIX));
+  mDelay.setParams(getParamManager()->getParamValue(PARAM_DELAY_TIME),
+                   getParamManager()->getParamValue(PARAM_DELAY_FEEDBACK),
+                   getParamManager()->getParamValue(PARAM_DELAY_MIX));
   float gain = getParamManager()->getParamValue(PARAM_GAIN);
 
   /* process */
@@ -171,8 +165,7 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   mDelay.processBlocks(channelPtrs, 2, numSamps);
   //
   /* check mute */
-  float mute
-      = getParamManager()->getParamValue(PARAM_MUTE])->load();
+  float mute = getParamManager()->getParamValue(PARAM_MUTE);
   if (mute > .5f) {
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       std::memset(channelPtrs[channel], 0, sizeof(float) * numSamps);
@@ -180,12 +173,22 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   }
 }
 
+juce::AudioProcessor *jkClassPlugAudioProcessor::getAudioProcessor()
+{
+  return this;
+}
 ParamManager *jkClassPlugAudioProcessor::getParamManager()
 {
-  return mInterface->getParameterManager();
+  return &mParamManager;
 }
-PresetManager        *jkClassPlugAudioProcessor::getPresetManager() {}
-juce::AudioProcessor *jkClassPlugAudioProcessor::getAudioProcessor() {}
+PresetManager *jkClassPlugAudioProcessor::getPresetManager()
+{
+  return &mPresetManager;
+}
+PropertyManager *jkClassPlugAudioProcessor::getPropertyManager()
+{
+  return &mPropertyManager;
+}
 
 //==============================================================================
 bool jkClassPlugAudioProcessor::hasEditor() const

@@ -13,6 +13,7 @@
 #include "Management/Interface/ProcessorInterface.h"
 #include "Management/Parameters/ParamManager.h"
 #include "Management/Presets/PresetManager.h"
+#include "Management/Properties/PropertyManager.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -50,9 +51,10 @@ public:
 
   //========================== interface overrides =============================
 
+  juce::AudioProcessor *getAudioProcessor() override;
   ParamManager         *getParamManager() override;
   PresetManager        *getPresetManager() override;
-  juce::AudioProcessor *getAudioProcessor() override;
+  PropertyManager      *getPropertyManager() override;
 
   //==============================================================================
   int                getNumPrograms() override;
@@ -70,6 +72,7 @@ private:
   void                    setModFreq();
   ParamManager            mParamManager;
   PresetManager           mPresetManager;
+  PropertyManager         mPropertyManager;
   juce::MidiKeyboardState mMidiState;
   FMVoiceManager          mVoices;
   float                   mTwoPiSampleDeltaT;

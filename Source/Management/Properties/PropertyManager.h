@@ -1,13 +1,16 @@
 #ifndef JK_PROPERTY_MANAGER_H
 #define JK_PROPERTY_MANAGER_H
 
-#include "ProcessorInterface.h"
+#include "../Interface/ProcessorInterface.h"
+#include "../Presets/PresetManager.h"
 
 class jkClassAudioProcessor;
-class PropertyManager : public ProcessorInterface {
+class PropertyManager {
+  ProcessorInterface *mInterface;
 
 public:
-  PropertyManager(ProcessorInterface &interface);
+  PropertyManager(ProcessorInterface *interface);
+  std::unique_ptr<juce::XmlElement> createXMLChild();
 };
 
 #endif
