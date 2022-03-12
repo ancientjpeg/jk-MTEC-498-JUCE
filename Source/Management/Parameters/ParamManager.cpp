@@ -8,12 +8,14 @@
   ==============================================================================
 */
 
-#include "ParamDefines.h"
+#include "ParamManager.h"
 
-juce::AudioProcessorValueTreeState::ParameterLayout getLayout()
+ParamManager::ParamManager() {}
+
+LAYOUT_T ParamManager::getLayout()
 {
   using juce::String;
-  juce::AudioProcessorValueTreeState::ParameterLayout layout;
+  LAYOUT_T layout;
   for (int i = 0; i < NUM_PARAMS; i++) {
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         PARAM_NAMES[i], PARAM_NAMES[i], PARAM_RANGES[i], PARAM_DEFAULTS[i]));

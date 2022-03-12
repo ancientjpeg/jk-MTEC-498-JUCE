@@ -7,13 +7,6 @@
               version="0.1.0">
   <MAINGROUP id="bR7Z1C" name="jkClassPlug">
     <GROUP id="{D65541B8-7B6D-2867-7665-9A2659902C33}" name="Source">
-      <GROUP id="{81F9E849-0563-DA0E-0AED-2A55F585D997}" name="Management">
-        <GROUP id="{ECE4CE88-2534-7207-621D-CC9D866D68FA}" name="Parameters">
-          <FILE id="t1MxSF" name="ParamDefines.cpp" compile="1" resource="0"
-                file="Source/Management/Parameters/ParamDefines.cpp"/>
-          <FILE id="eWkJnt" name="ParamDefines.h" compile="0" resource="0" file="Source/Management/Parameters/ParamDefines.h"/>
-        </GROUP>
-      </GROUP>
       <GROUP id="{B8348CAA-1A64-1ED5-8BD5-7E6F43ABEBDF}" name="DSP">
         <GROUP id="{E52F9207-5076-8096-504A-34EB3F9642B1}" name="Delays">
           <FILE id="baBEiO" name="SimpleMCDelay.cpp" compile="1" resource="0"
@@ -28,6 +21,29 @@
           <FILE id="J2J4O6" name="WaveTableOsc.cpp" compile="1" resource="0"
                 file="Source/DSP/Generators/WaveTableOsc.cpp"/>
           <FILE id="Oil7eU" name="WaveTableOsc.h" compile="0" resource="0" file="Source/DSP/Generators/WaveTableOsc.h"/>
+        </GROUP>
+      </GROUP>
+      <GROUP id="{BA22F860-3C01-1B54-AB97-486F0276072A}" name="Management">
+        <GROUP id="{63C6F4F8-D047-CACD-E45F-7F217D521ED9}" name="Interface">
+          <FILE id="Kn3gVt" name="PluginInterface.h" compile="0" resource="0"
+                file="Source/Management/Interface/PluginInterface.h"/>
+        </GROUP>
+        <GROUP id="{835A7CCB-B878-7655-4296-82A8E29D8913}" name="Parameters">
+          <FILE id="kCvdsc" name="ParamDefines.h" compile="0" resource="0" file="Source/Management/Parameters/ParamDefines.h"/>
+          <FILE id="afLV35" name="ParamManager.cpp" compile="1" resource="0"
+                file="Source/Management/Parameters/ParamManager.cpp"/>
+          <FILE id="wuH3g7" name="ParamManager.h" compile="0" resource="0" file="Source/Management/Parameters/ParamManager.h"/>
+        </GROUP>
+        <GROUP id="{2CED08A7-41F3-8383-9417-A87BE590B88C}" name="Presets">
+          <FILE id="bfQlSK" name="PresetManager.cpp" compile="1" resource="0"
+                file="Source/Management/Presets/PresetManager.cpp"/>
+          <FILE id="ToRXX0" name="PresetManager.h" compile="0" resource="0" file="Source/Management/Presets/PresetManager.h"/>
+        </GROUP>
+        <GROUP id="{61DD2EE7-8465-B66B-473E-39019ED29E20}" name="Properties">
+          <FILE id="PXus9N" name="PropertyManager.cpp" compile="1" resource="0"
+                file="Source/Management/Properties/PropertyManager.cpp"/>
+          <FILE id="hDhjB2" name="PropertyManager.h" compile="0" resource="0"
+                file="Source/Management/Properties/PropertyManager.h"/>
         </GROUP>
       </GROUP>
       <FILE id="uWpiAO" name="jkClassSliderBase.h" compile="0" resource="0"
