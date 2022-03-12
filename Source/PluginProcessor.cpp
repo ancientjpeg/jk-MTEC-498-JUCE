@@ -13,24 +13,22 @@
 jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(
-          BusesProperties()
+        BusesProperties()
 #if !JucePlugin_IsMidiEffect
 #if !JucePlugin_IsSynth
-              .withInput("Input", juce::AudioChannelSet::stereo(), true)
+            .withInput("Input", juce::AudioChannelSet::stereo(), true)
 #endif
-              .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+            .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-              ),
+            ),
 #else
     :
 #endif
-      mUndoManager(30000, 200),
-      mParamState(*this, &mUndoManager, juce::Identifier("jkClassPlug"),
-                  getLayout()),
+      mParamManager(this), mPresetManager(this),
       mVoices(
           8,
-          mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_RATIO])->load(),
-          mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_AMT])->load())
+          getParamManager()->getParamValue(PARAM_FM_RATIO),
+          getParamManager()->getParamValue(PARAM_FM_AMT)
 {
   mMidiState.addListener(&mVoices);
 }
@@ -73,7 +71,8 @@ bool jkClassPlugAudioProcessor::isMidiEffect() const
 #endif
 }
 
-double jkClassPlugAudioProcessor::getTailLengthSeconds() const { return 0.0; }
+double jkClassPlugAudioProcessor::getTailLengthSeconds() const {
+  return 0.0; }
 
 int    jkClassPlugAudioProcessor::getNumPrograms()
 {
@@ -83,7 +82,8 @@ int    jkClassPlugAudioProcessor::getNumPrograms()
             // programs.
 }
 
-int                jkClassPlugAudioProcessor::getCurrentProgram() { return 0; }
+int                jkClassPlugAudioProcessor::getCurrentProgram() {
+  return 0; }
 
 void               jkClassPlugAudioProcessor::setCurrentProgram(int index) {}
 
@@ -101,17 +101,12 @@ void jkClassPlugAudioProcessor::changeProgramName(int                 index,
 void jkClassPlugAudioProcessor::prepareToPlay(double sampleRate,
                                               int    samplesPerBlock)
 {
-  // Use this method as the place to do any pre-playback
-  // initialisation that you need..
   mTwoPiSampleDeltaT = (1.f / sampleRate) * 2.f * M_PI;
-
   if (!mDelay.isPrepared) {
-    mDelay.prepare(
-        mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_TIME])->load(),
-        mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_FEEDBACK])
-            ->load(),
-        mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_MIX])->load(),
-        5.f, sampleRate, 2);
+    mDelay.prepare(getParamManager()->getParamValue(PARAM_DELAY_TIME),
+                   getParamManager()->getParamValue(PARAM_DELAY_FEEDBACK),
+                   getParamManager()->getParamValue(PARAM_DELAY_MIX), 5.f,
+                   sampleRate, 2);
   }
 }
 
@@ -130,8 +125,8 @@ bool jkClassPlugAudioProcessor::isBusesLayoutSupported(
   // stereo. Some plugin hosts, such as certain GarageBand
   // versions, will only load plugins that support stereo bus
   // layouts.
-  if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono() &&
-      layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+  if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
+      && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
     return false;
 
     // This checks if the input layout matches the output
@@ -157,17 +152,14 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   mMidiState.processNextMidiBuffer(midiMessages, 0, numSamps, false);
 
   /* check params */
-  mVoices.setRatio(
-      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_RATIO])->load());
-  mVoices.setAmt(
-      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_FM_AMT])->load());
+  mVoices.setRatio(getParamManager()->getParamValue(PARAM_FM_RATIO));
+  mVoices.setAmt(getParamManager()->getParamValue(PARAM_FM_AMT));
   mDelay.setParams(
-      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_TIME])->load(),
-      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_FEEDBACK])
+      getParamManager()->getParamValue(PARAM_DELAY_TIM]),
+      getParamManager()->getParamValue(PARAM_DELAY_FEEDBACK])
           ->load(),
-      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_DELAY_MIX])->load());
-  float gain =
-      mParamState.getRawParameterValue(PARAM_NAMES[PARAM_GAIN])->load();
+      getParamManager()->getParamValue(PARAM_DELAY_MIX));
+  float gain = getParamManager()->getParamValue(PARAM_GAIN);
 
   /* process */
   for (int i = 0; i < numSamps; i++) {
@@ -177,15 +169,23 @@ void jkClassPlugAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     }
   }
   mDelay.processBlocks(channelPtrs, 2, numSamps);
-//
+  //
   /* check mute */
-  float mute = mParamState.getRawParameterValue(PARAM_NAMES[PARAM_MUTE])->load();
+  float mute
+      = getParamManager()->getParamValue(PARAM_MUTE])->load();
   if (mute > .5f) {
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
       std::memset(channelPtrs[channel], 0, sizeof(float) * numSamps);
     }
   }
 }
+
+ParamManager *jkClassPlugAudioProcessor::getParamManager()
+{
+  return mInterface->getParameterManager();
+}
+PresetManager        *jkClassPlugAudioProcessor::getPresetManager() {}
+juce::AudioProcessor *jkClassPlugAudioProcessor::getAudioProcessor() {}
 
 //==============================================================================
 bool jkClassPlugAudioProcessor::hasEditor() const

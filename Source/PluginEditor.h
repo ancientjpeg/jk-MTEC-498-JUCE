@@ -13,9 +13,8 @@
 #include "jkStyle.h"
 #include <JuceHeader.h>
 
-//==============================================================================
-/**
- */
+#define ATTACHMENT_T juce::AudioProcessorValueTreeState::SliderAttachment
+
 class jkClassPlugAudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
   jkClassPlugAudioProcessorEditor(jkClassPlugAudioProcessor &);
@@ -29,14 +28,12 @@ public:
 private:
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
-  jkClassPlugAudioProcessor &audioProcessor;
-  jkClassSliderBase FMFreqSlider, FMAmtSlider, gainSlider, mDelayTimeSlider,
-      mDelayFBSlider, mDelayMixSlider;
-  juce::TextButton                                     muteButton;
-  juce::AudioProcessorValueTreeState::SliderAttachment fmf, fma, dt, dfb, dm,
-      gn;
-  juce::AudioProcessorValueTreeState::ButtonAttachment mb;
-  jkStyle                                              baseStyle;
+  jkClassPlugAudioProcessor          &audioProcessor;
+  juce::OwnedArray<jkClassSliderBase> mSliders;
+  std::unique_ptr<juce::TextButton>   mMuteButton;
+  std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> mb;
+  juce::OwnedArray<ATTACHMENT_T> mAttachments;
+  jkStyle                        baseStyle;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(jkClassPlugAudioProcessorEditor)
 };

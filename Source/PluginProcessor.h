@@ -10,13 +10,16 @@
 
 #include "DSP/Delays/SimpleMCDelay.h"
 #include "DSP/Generators/FMVoice.h"
-#include "Management/Parameters/ParamDefines.h"
+#include "Management/Interface/ProcessorInterface.h"
+#include "Management/Parameters/ParamManager.h"
+#include "Management/Presets/PresetManager.h"
 #include <JuceHeader.h>
 
 //==============================================================================
 /**
  */
-class jkClassPlugAudioProcessor : public juce::AudioProcessor {
+class jkClassPlugAudioProcessor : public juce::AudioProcessor,
+                                  public ProcessorInterface {
 
 public:
   //==============================================================================
@@ -45,16 +48,18 @@ public:
   bool               isMidiEffect() const override;
   double             getTailLengthSeconds() const override;
 
+  //========================== interface overrides =============================
+
+  ParamManager         *getParamManager() override;
+  PresetManager        *getPresetManager() override;
+  juce::AudioProcessor *getAudioProcessor() override;
+
   //==============================================================================
   int                getNumPrograms() override;
   int                getCurrentProgram() override;
   void               setCurrentProgram(int index) override;
   const juce::String getProgramName(int index) override;
   void changeProgramName(int index, const juce::String &newName) override;
-
-  //=========================== PUBLIC MEMBERS =================================
-  juce::UndoManager                  mUndoManager;
-  juce::AudioProcessorValueTreeState mParamState;
 
   //==============================================================================
   void getStateInformation(juce::MemoryBlock &destData) override;
@@ -63,6 +68,8 @@ public:
 private:
   //==============================================================================
   void                    setModFreq();
+  ParamManager            mParamManager;
+  PresetManager           mPresetManager;
   juce::MidiKeyboardState mMidiState;
   FMVoiceManager          mVoices;
   float                   mTwoPiSampleDeltaT;

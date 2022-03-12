@@ -11,11 +11,11 @@ class ProcessorInterface {
 public:
   virtual ~ProcessorInterface(){};
 
-  virtual ParamManager         *getParameterManager() = 0;
+  virtual ParamManager         *getParamManager()   = 0;
 
-  virtual PresetManager        *getPresetManager()    = 0;
+  virtual PresetManager        *getPresetManager()  = 0;
 
-  virtual juce::AudioProcessor *getAudioProcessor()   = 0;
+  virtual juce::AudioProcessor *getAudioProcessor() = 0;
 };
 
 #endif

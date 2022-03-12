@@ -1,11 +1,13 @@
 #ifndef JK_PROPERTY_MANAGER_H
 #define JK_PROPERTY_MANAGER_H
 
-class ParamManager;
+#include "ProcessorInterface.h"
 
-class PropertyManager {
+class jkClassAudioProcessor;
+class PropertyManager : public ProcessorInterface {
+
 public:
-  PropertyManager();
+  PropertyManager(ProcessorInterface &interface);
 };
 
 #endif
