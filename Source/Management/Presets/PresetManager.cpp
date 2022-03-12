@@ -50,7 +50,7 @@ void PresetManager::saveCurrentPreset(juce::String inPresetName)
   // Convert the value tree into an XML object which can be saved on disk to as
   // binary
   auto xml = tree_state.createXml();
-  xml->addChildElement(prop_state->createXMLChild().get());
+  // xml->addChildElement(prop_state->createXMLChild().get());
 
   auto preset_file
       = FolderManager::getPresetsFolder().getChildFile(inPresetName + ".xml");

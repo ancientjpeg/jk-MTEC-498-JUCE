@@ -11,6 +11,7 @@ PropertyManager::PropertyManager(ProcessorInterface *interface)
 }
 std::unique_ptr<juce::XmlElement> PropertyManager::createXMLChild()
 {
+  // This is unused at the moment
   auto xml = std::make_unique<juce::XmlElement>("Properties");
   xml->setAttribute("Property1", "This is a property");
   return xml;
