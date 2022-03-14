@@ -23,8 +23,6 @@ PresetManager::PresetManager(ProcessorInterface *inInterface)
 /* */
 PresetManager::~PresetManager()
 {
-  int *i = new int;
-  delete i;
 }
 
 /* */
@@ -45,12 +43,12 @@ void PresetManager::saveCurrentPreset(juce::String inPresetName)
   // Get the underlying ValueTree from out "Parameter Value Tree"
   auto tree_state
       = mProcessorInterface->getParamManager()->getValueTree()->copyState();
-  auto prop_state = mProcessorInterface->getPropertyManager();
 
   // Convert the value tree into an XML object which can be saved on disk to as
   // binary
+  tree_state.appendChild(*(mProcessorInterface->getPropertyManager()->getValueTree()), nullptr);
+  bool check = tree_state.isValid();
   auto xml = tree_state.createXml();
-  // xml->addChildElement(prop_state->createXMLChild().get());
 
   auto preset_file
       = FolderManager::getPresetsFolder().getChildFile(inPresetName + ".xml");

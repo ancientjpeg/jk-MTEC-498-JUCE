@@ -7,10 +7,12 @@
 class jkClassAudioProcessor;
 class PropertyManager {
   ProcessorInterface *mInterface;
+  juce::ValueTree               mPropertyTree;
 
 public:
   PropertyManager(ProcessorInterface *interface);
-  std::unique_ptr<juce::XmlElement> createXMLChild();
+  juce::ValueTree *getValueTree();
+  
 };
 
 #endif

@@ -10,6 +10,7 @@
 
 #include "DSP/Delays/SimpleMCDelay.h"
 #include "DSP/Generators/FMVoice.h"
+#include "Management/Folder Manager/FolderManager.h"
 #include "Management/Interface/ProcessorInterface.h"
 #include "Management/Parameters/ParamManager.h"
 #include "Management/Presets/PresetManager.h"
@@ -70,8 +71,8 @@ public:
 private:
   //==============================================================================
   void                    setModFreq();
-  ParamManager            mParamManager;
   PresetManager           mPresetManager;
+  ParamManager            mParamManager;
   PropertyManager         mPropertyManager;
   juce::MidiKeyboardState mMidiState;
   FMVoiceManager          mVoices;

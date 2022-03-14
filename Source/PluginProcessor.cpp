@@ -31,7 +31,10 @@ jkClassPlugAudioProcessor::jkClassPlugAudioProcessor()
   mMidiState.addListener(&mVoices);
 }
 
-jkClassPlugAudioProcessor::~jkClassPlugAudioProcessor() {}
+jkClassPlugAudioProcessor::~jkClassPlugAudioProcessor()
+{
+  mPresetManager.saveCurrentPreset("default");
+}
 
 //==============================================================================
 const juce::String jkClassPlugAudioProcessor::getName() const

@@ -2,17 +2,20 @@
 #include "../Presets/PresetManager.h"
 
 PropertyManager::PropertyManager(ProcessorInterface *interface)
-    : mInterface(interface)
+    : mInterface(interface),
+mPropertyTree("Properties", {}, {{"PresetNames", {}, {}}})
 {
-  auto presetNames = mInterface->getPresetManager()->getCurrentPresetNames();
+//
+  auto presetNames
+      = mInterface->getPresetManager()->getCurrentPresetNames();
+  auto presetNameTree = mPropertyTree.getChildWithName("PresetNames");
   for (juce::String s : presetNames) {
     DBG(s);
+    presetNameTree.appendChild({s, {}, {}}, nullptr);
   }
 }
-std::unique_ptr<juce::XmlElement> PropertyManager::createXMLChild()
+juce::ValueTree *PropertyManager::getValueTree()
 {
   // This is unused at the moment
-  auto xml = std::make_unique<juce::XmlElement>("Properties");
-  xml->setAttribute("Property1", "This is a property");
-  return xml;
+  return &mPropertyTree;
 }
